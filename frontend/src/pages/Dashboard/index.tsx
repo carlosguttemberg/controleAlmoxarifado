@@ -1,5 +1,30 @@
 import React from 'react';
 
-const Dashboard: React.FC = () => <h1>Dashboard</h1>;
+import { FiUser, FiGrid } from 'react-icons/fi';
+import MenuButton from '../../components/MenuButton';
+
+import { Container, Content } from './styles';
+
+const Dashboard: React.FC = () => {
+  return (
+    <Content>
+      <Container style={{ marginTop: '15%' }}>
+        <h1>Menu de opções</h1>
+      </Container>
+
+      <Container>
+        <MenuButton to="/employees" icon={FiUser}>
+          Funcionários
+        </MenuButton>
+        <MenuButton to="/employees" icon={FiGrid}>
+          Grupo
+        </MenuButton>
+        <MenuButton to="/employees" icon={FiGrid}>
+          SubGrupo
+        </MenuButton>
+      </Container>
+    </Content>
+  );
+};
 
 export default Dashboard;

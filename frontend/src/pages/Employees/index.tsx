@@ -103,7 +103,7 @@ const Employees: React.FC = () => {
 
           <Link to="/">
             <FiArrowLeft />
-            Voltar para logon
+            Voltar para o menu
           </Link>
         </AnimationContainer>
       </Content>
