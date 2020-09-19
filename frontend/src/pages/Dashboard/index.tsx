@@ -16,10 +16,10 @@ const Dashboard: React.FC = () => {
         <MenuButton to="/employees" icon={FiUser}>
           Funcionários
         </MenuButton>
-        <MenuButton to="/employees" icon={FiGrid}>
+        <MenuButton to="/group" icon={FiGrid}>
           Grupo
         </MenuButton>
-        <MenuButton to="/employees" icon={FiGrid}>
+        <MenuButton to="/subGroup" icon={FiGrid}>
           SubGrupo
         </MenuButton>
       </Container>

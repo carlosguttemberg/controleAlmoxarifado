@@ -1,11 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import {
-  FiArrowLeft,
-  FiMail,
-  FiUser,
-  FiPhoneCall,
-  FiBriefcase,
-} from 'react-icons/fi';
+import { FiArrowLeft, FiPackage } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -24,45 +18,35 @@ import Button from '../../components/Button';
 
 import { Container, Content, Background, AnimationContainer } from './styles';
 
-interface EmployeesFormData {
+interface SubGroupFormData {
   name: string;
-  email: string;
-  telphone: string;
-  attribution: string;
 }
 
-const Employees: React.FC = () => {
+const SubGroup: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
   const history = useHistory();
 
   const handleSubmit = useCallback(
-    async (data: EmployeesFormData) => {
+    async (data: SubGroupFormData) => {
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatório'),
-          email: Yup.string()
-            .required('Email obrigatório')
-            .email('Digite um email válido'),
-          telphone: Yup.string()
-            .min(10, 'No mínimo 10 dígitos')
-            .required('Telefone é obrigatório'),
-          attribution: Yup.string().required('Função é obrigatório'),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        await api.post('/employees', data);
+        await api.post('/subGroups', data);
 
         history.push('/');
 
         addToast({
           type: 'success',
           title: 'Cadastro realizado!',
-          description: 'Funcionário cadastrado!',
+          description: 'SubGrupo cadastrado!',
         });
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
@@ -88,15 +72,9 @@ const Employees: React.FC = () => {
       <Content>
         <AnimationContainer>
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Cadastro de Funcionário</h1>
+            <h1>Cadastro de SubGrupo</h1>
 
-            <Input name="name" icon={FiUser} placeholder="Nome" />
-
-            <Input name="email" icon={FiMail} placeholder="E-mail" />
-
-            <Input name="telphone" icon={FiPhoneCall} placeholder="Telefone" />
-
-            <Input name="attribution" icon={FiBriefcase} placeholder="Função" />
+            <Input name="name" icon={FiPackage} placeholder="Nome" />
 
             <Button type="submit">Cadastrar</Button>
           </Form>
@@ -111,4 +89,4 @@ const Employees: React.FC = () => {
   );
 };
 
-export default Employees;
+export default SubGroup;
