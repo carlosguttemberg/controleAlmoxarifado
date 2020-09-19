@@ -3,7 +3,7 @@ import Group from '@modules/groups/infra/typeorm/entities/Group';
 
 import { inject, injectable } from 'tsyringe';
 
-import IGroupsRepository from '@modules/groups/repositories/IGroupsRepository'; // '@modules/employees/repositories/IEmployeesRepository';
+import IGroupsRepository from '@modules/groups/repositories/IGroupsRepository';
 
 interface IRequest {
   name: string;
