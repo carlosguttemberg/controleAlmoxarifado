@@ -44,7 +44,6 @@ class EmployeesRepository implements IEmployeesRepository {
       filters.push({ name });
     }
 
-    console.log(filters);
     const employees = await this.ormRepository.find({ where: filters });
 
     return employees;

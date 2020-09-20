@@ -6,5 +6,6 @@ const subGroupsRouter = Router();
 const subGroupsController = new SubGroupsController();
 
 subGroupsRouter.post('/', subGroupsController.create);
+subGroupsRouter.get('/', subGroupsController.list);
 
 export default subGroupsRouter;

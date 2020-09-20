@@ -18,6 +18,17 @@ class GroupsRepository implements ISubGroupsRepository {
 
     return group;
   }
+
+  public async list({ name }: ICreateSubGroupDTO): Promise<SubGroup[]> {
+    let subGroups = null;
+    if (name) {
+      subGroups = await this.ormRepository.find({ where: { name } });
+    } else {
+      subGroups = await this.ormRepository.find();
+    }
+
+    return subGroups;
+  }
 }
 
 export default GroupsRepository;

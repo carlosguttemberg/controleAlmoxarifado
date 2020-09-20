@@ -10,19 +10,19 @@ interface IRequest {
 }
 
 @injectable()
-class CreateSubGroupService {
+class ListSubGroupService {
   constructor(
     @inject('SubGroupsRepository')
     private subGroupsRepository: ISubGroupsRepository,
   ) {}
 
-  public async execute({ name }: IRequest): Promise<SubGroup> {
-    const group = await this.subGroupsRepository.create({
+  public async execute({ name }: IRequest): Promise<SubGroup[]> {
+    const subGroups = await this.subGroupsRepository.list({
       name,
     });
 
-    return group;
+    return subGroups;
   }
 }
 
-export default CreateSubGroupService;
+export default ListSubGroupService;

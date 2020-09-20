@@ -4,4 +4,5 @@ import ICreateSubGroupDTO from '@modules/subGroups/dtos/ICreateSubGroupDTO';
 
 export default interface ISubGroupsRepository {
   create(data: ICreateSubGroupDTO): Promise<SubGroup>;
+  list(data: ICreateSubGroupDTO): Promise<SubGroup[]>;
 }
