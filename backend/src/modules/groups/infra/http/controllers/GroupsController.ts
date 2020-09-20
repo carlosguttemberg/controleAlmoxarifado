@@ -15,7 +15,7 @@ interface IMyRequest extends Request {
   };
 }
 
-export default class EmployeesController {
+export default class GroupsController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { name } = request.body;
 

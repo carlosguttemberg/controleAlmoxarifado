@@ -6,6 +6,7 @@ import Group from '../pages/Group';
 import SubGroup from '../pages/SubGroup';
 import Employees from '../pages/Employees';
 import ListGroup from '../pages/ListGroup';
+import ListEmployees from '../pages/ListEmployees';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -14,6 +15,8 @@ const Routes: React.FC = () => (
 
     <Route path="/listGroup" exact component={ListGroup} />
     <Route path="/group" exact component={Group} />
+
+    <Route path="/listEmployees" exact component={ListEmployees} />
 
     <Route path="/subGroup" exact component={SubGroup} />
 

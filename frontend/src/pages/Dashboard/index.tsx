@@ -13,7 +13,7 @@ const Dashboard: React.FC = () => {
       </Container>
 
       <Container>
-        <MenuButton to="/employees" icon={FiUser}>
+        <MenuButton to="/listEmployees" icon={FiUser}>
           Funcionários
         </MenuButton>
         <MenuButton to="/listGroup" icon={FiGrid}>

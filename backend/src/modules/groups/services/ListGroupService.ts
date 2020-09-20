@@ -10,7 +10,7 @@ interface IRequest {
 }
 
 @injectable()
-class CreateGroupService {
+class ListGroupService {
   constructor(
     @inject('GroupsRepository')
     private groupsRepository: IGroupsRepository,
@@ -25,4 +25,4 @@ class CreateGroupService {
   }
 }
 
-export default CreateGroupService;
+export default ListGroupService;
