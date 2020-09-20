@@ -4,4 +4,5 @@ import ICreateGroupDTO from '@modules/groups/dtos/ICreateGroupDTO';
 
 export default interface IGroupsRepository {
   create(data: ICreateGroupDTO): Promise<Group>;
+  list(data: ICreateGroupDTO): Promise<Group[]>;
 }
