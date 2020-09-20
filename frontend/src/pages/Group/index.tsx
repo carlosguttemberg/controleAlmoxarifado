@@ -79,9 +79,9 @@ const Group: React.FC = () => {
             <Button type="submit">Cadastrar</Button>
           </Form>
 
-          <Link to="/">
+          <Link to="/listGroup">
             <FiArrowLeft />
-            Voltar para o menu
+            Voltar
           </Link>
         </AnimationContainer>
       </Content>
