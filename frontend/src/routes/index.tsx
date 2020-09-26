@@ -2,12 +2,18 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Dashboard from '../pages/Dashboard';
+
 import Group from '../pages/Group';
-import SubGroup from '../pages/SubGroup';
-import Employees from '../pages/Employees';
 import ListGroup from '../pages/ListGroup';
-import ListSubGroup from '../pages/ListSubGroup';
+
+import Employees from '../pages/Employees';
 import ListEmployees from '../pages/ListEmployees';
+
+import SubGroup from '../pages/SubGroup';
+import ListSubGroup from '../pages/ListSubGroup';
+
+import Departament from '../pages/Departament';
+import ListDepartament from '../pages/ListDepartament';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -18,6 +24,9 @@ const Routes: React.FC = () => (
 
     <Route path="/listGroup" exact component={ListGroup} />
     <Route path="/group" exact component={Group} />
+
+    <Route path="/listDepartament" exact component={ListDepartament} />
+    <Route path="/departament" exact component={Departament} />
 
     <Route path="/listSubGroup" exact component={ListSubGroup} />
     <Route path="/subGroup" exact component={SubGroup} />

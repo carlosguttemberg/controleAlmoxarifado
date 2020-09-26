@@ -17,10 +17,13 @@ const Dashboard: React.FC = () => {
           Funcionários
         </MenuButton>
         <MenuButton to="/listGroup" icon={FiGrid}>
-          Grupo
+          Grupos
         </MenuButton>
         <MenuButton to="/listSubGroup" icon={FiGrid}>
-          SubGrupo
+          SubGrupos
+        </MenuButton>
+        <MenuButton to="/listDepartament" icon={FiGrid}>
+          Departamentos
         </MenuButton>
       </Container>
     </Content>
