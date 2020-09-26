@@ -19,7 +19,7 @@ const Dashboard: React.FC = () => {
         <MenuButton to="/listGroup" icon={FiGrid}>
           Grupo
         </MenuButton>
-        <MenuButton to="/subGroup" icon={FiGrid}>
+        <MenuButton to="/listSubGroup" icon={FiGrid}>
           SubGrupo
         </MenuButton>
       </Container>
