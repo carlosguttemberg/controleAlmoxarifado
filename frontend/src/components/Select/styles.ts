@@ -44,7 +44,7 @@ export const Container = styled.div<ContainerProps>`
       color: #ff9000;
     `}
 
-  input {
+  select {
     flex: 1;
     background: transparent;
     border: 0;
@@ -52,6 +52,16 @@ export const Container = styled.div<ContainerProps>`
 
     &::placeholder {
       color: #666360;
+    }
+
+    option {
+      color: #f4ede8;
+      background: #232129;
+      font-weight: small;
+      display: flex;
+      white-space: pre;
+      min-height: 20px;
+      padding: 0px 2px 1px;
     }
   }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FiUser, FiGrid } from 'react-icons/fi';
+import { FiUser, FiGrid, FiPackage } from 'react-icons/fi';
 import MenuButton from '../../components/MenuButton';
 
 import { Container, Content } from './styles';
@@ -22,14 +22,18 @@ const Dashboard: React.FC = () => {
         <MenuButton to="/listSubGroup" icon={FiGrid}>
           SubGrupos
         </MenuButton>
+      </Container>
+      <Container>
         <MenuButton to="/listDepartament" icon={FiGrid}>
           Departamentos
         </MenuButton>
-        <Container>
-          <MenuButton to="/listEquipament" icon={FiGrid}>
-            Equipamentos
-          </MenuButton>
-        </Container>
+        <MenuButton to="/listEquipament" icon={FiPackage}>
+          Equipamentos
+        </MenuButton>
+
+        <MenuButton to="/listEquipament" icon={FiPackage}>
+          Ordens de Serviços
+        </MenuButton>
       </Container>
     </Content>
   );

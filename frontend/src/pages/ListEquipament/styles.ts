@@ -39,12 +39,8 @@ export const AnimationContainer = styled.div`
   form {
     margin: 20px 0;
     width: 340px;
-    text-align: center;
     display: flex;
-
-    h1 {
-      margin-bottom: 24px;
-    }
+    text-align: center;
 
     a {
       color: #f4ede8;
@@ -54,6 +50,14 @@ export const AnimationContainer = styled.div`
 
       &:hover {
         color: ${shade(0.2, '#f4ede8')};
+      }
+    }
+
+    div {
+      height: 56px;
+      margin: 0;
+      & + div {
+        margin-left: 8px;
       }
     }
   }

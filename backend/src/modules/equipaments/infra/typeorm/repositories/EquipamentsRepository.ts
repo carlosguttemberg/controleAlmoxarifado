@@ -59,7 +59,10 @@ class EquipamentsRepository implements IEquipamentsRepository {
       filters.push({ subgroup_id });
     }
 
-    const equipaments = await this.ormRepository.find({ where: filters });
+    const equipaments = await this.ormRepository.find({
+      where: filters,
+      relations: ['group', 'subgroup', 'departament'],
+    });
 
     return equipaments;
   }
