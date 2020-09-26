@@ -15,6 +15,9 @@ import ListSubGroup from '../pages/ListSubGroup';
 import Departament from '../pages/Departament';
 import ListDepartament from '../pages/ListDepartament';
 
+import Equipament from '../pages/Equipament';
+import ListEquipament from '../pages/ListEquipament';
+
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={Dashboard} />
@@ -30,6 +33,9 @@ const Routes: React.FC = () => (
 
     <Route path="/listSubGroup" exact component={ListSubGroup} />
     <Route path="/subGroup" exact component={SubGroup} />
+
+    <Route path="/listEquipament" exact component={ListEquipament} />
+    <Route path="/equipament" exact component={Equipament} />
 
     <Route path="/dashboard" exact component={Dashboard} isPrivate />
   </Switch>

@@ -25,6 +25,11 @@ const Dashboard: React.FC = () => {
         <MenuButton to="/listDepartament" icon={FiGrid}>
           Departamentos
         </MenuButton>
+        <Container>
+          <MenuButton to="/listEquipament" icon={FiGrid}>
+            Equipamentos
+          </MenuButton>
+        </Container>
       </Container>
     </Content>
   );

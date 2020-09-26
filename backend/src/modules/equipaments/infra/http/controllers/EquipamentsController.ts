@@ -25,7 +25,14 @@ interface IMyRequest extends Request {
 
 export default class GroupsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, code, group_id, subgroup_id, departament_id } = request.body;
+    const {
+      name,
+      code,
+      group_id,
+      subgroup_id,
+      departament_id,
+      value,
+    } = request.body;
 
     const createEquipament = container.resolve(CreateEquipamentService);
 
@@ -35,6 +42,7 @@ export default class GroupsController {
       departament_id,
       group_id,
       subgroup_id,
+      value,
     });
 
     return response.json(group);

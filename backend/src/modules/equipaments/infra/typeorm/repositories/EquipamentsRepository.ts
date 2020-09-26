@@ -2,6 +2,7 @@ import { getRepository, Repository } from 'typeorm';
 
 import Equipament from '@modules/equipaments/infra/typeorm/entities/Equipament';
 import ICreateEquipamentDTO from '@modules/equipaments/dtos/ICreateEquipamentDTO';
+import IListEquipamentDTO from '@modules/equipaments/dtos/IListEquipamentDTO';
 import IEquipamentsRepository from '@modules/equipaments/repositories/IEquipamentsRepository';
 
 interface IFilters {
@@ -35,7 +36,7 @@ class EquipamentsRepository implements IEquipamentsRepository {
     departament_id,
     group_id,
     subgroup_id,
-  }: ICreateEquipamentDTO): Promise<Equipament[]> {
+  }: IListEquipamentDTO): Promise<Equipament[]> {
     const filters: IFilters[] = [];
 
     if (name) {

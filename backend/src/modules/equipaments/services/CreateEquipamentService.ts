@@ -11,6 +11,7 @@ interface IRequest {
   group_id: string;
   subgroup_id: string;
   departament_id: string;
+  value: number;
 }
 
 @injectable()
@@ -26,6 +27,7 @@ class CreateEquipamentService {
     departament_id,
     group_id,
     subgroup_id,
+    value,
   }: IRequest): Promise<Equipament> {
     const equipament = await this.equipamentsRepository.create({
       code,
@@ -33,6 +35,7 @@ class CreateEquipamentService {
       group_id,
       name,
       subgroup_id,
+      value,
     });
 
     return equipament;

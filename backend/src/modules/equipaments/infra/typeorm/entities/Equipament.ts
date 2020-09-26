@@ -44,6 +44,9 @@ class Equipament {
   @JoinColumn({ name: 'departament_id' })
   departament: Departament;
 
+  @Column()
+  value: number;
+
   @CreateDateColumn()
   created_at: Date;
 

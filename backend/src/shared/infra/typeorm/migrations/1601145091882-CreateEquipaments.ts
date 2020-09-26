@@ -30,6 +30,11 @@ export default class CreateEquipaments1601145091882
             isNullable: false,
           },
           {
+            name: 'value',
+            type: 'double precision',
+            isNullable: false,
+          },
+          {
             name: 'group_id',
             type: 'uuid',
             isNullable: false,
