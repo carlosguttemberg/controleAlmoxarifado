@@ -12,6 +12,9 @@ import SubGroupsRepository from '@modules/subGroups/infra/typeorm/repositories/S
 import IDepartamentsRepository from '@modules/departaments/repositories/IDepartamentsRepository';
 import DepartamentsRepository from '@modules/departaments/infra/typeorm/repositories/DepartamentsRepository';
 
+import IEquipamentsRepository from '@modules/equipaments/repositories/IEquipamentsRepository';
+import EquipamentsRepository from '@modules/equipaments/infra/typeorm/repositories/EquipamentsRepository';
+
 container.registerSingleton<IEmployeesRepository>(
   'EmployeesRepository',
   EmployeesRepository,
@@ -30,4 +33,9 @@ container.registerSingleton<ISubGroupsRepository>(
 container.registerSingleton<IDepartamentsRepository>(
   'DepartamentsRepository',
   DepartamentsRepository,
+);
+
+container.registerSingleton<IEquipamentsRepository>(
+  'EquipamentsRepository',
+  EquipamentsRepository,
 );
