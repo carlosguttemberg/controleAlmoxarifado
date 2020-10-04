@@ -1,13 +1,13 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateMaintenanceTypes1601827300804
+export default class CreateCalibrationTypes1601831469561
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
 
     await queryRunner.createTable(
       new Table({
-        name: 'maintenanceTypes',
+        name: 'calibrationTypes',
         columns: [
           {
             name: 'id',
@@ -37,6 +37,6 @@ export default class CreateMaintenanceTypes1601827300804
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('maintenanceTypes');
+    await queryRunner.dropTable('calibrationTypes');
   }
 }

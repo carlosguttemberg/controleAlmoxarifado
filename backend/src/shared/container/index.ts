@@ -18,6 +18,9 @@ import EquipamentsRepository from '@modules/equipaments/infra/typeorm/repositori
 import IMaintenanceTypesRepository from '@modules/maintenanceTypes/repositories/IMaintenanceTypesRepository';
 import MaintenanceTypesRepository from '@modules/maintenanceTypes/infra/typeorm/repositories/MaintenanceTypesRepository';
 
+import ICalibrationTypesRepository from '@modules/calibrationTypes/repositories/ICalibrationTypesRepository';
+import CalibrationTypesRepository from '@modules/calibrationTypes/infra/typeorm/repositories/CalibrationTypesRepository';
+
 container.registerSingleton<IEmployeesRepository>(
   'EmployeesRepository',
   EmployeesRepository,
@@ -46,4 +49,9 @@ container.registerSingleton<IEquipamentsRepository>(
 container.registerSingleton<IMaintenanceTypesRepository>(
   'MaintenanceTypesRepository',
   MaintenanceTypesRepository,
+);
+
+container.registerSingleton<ICalibrationTypesRepository>(
+  'CalibrationTypesRepository',
+  CalibrationTypesRepository,
 );
