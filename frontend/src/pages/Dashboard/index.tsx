@@ -22,17 +22,17 @@ const Dashboard: React.FC = () => {
         <MenuButton to="/listSubGroup" icon={FiGrid}>
           SubGrupos
         </MenuButton>
-      </Container>
-      <Container>
         <MenuButton to="/listDepartament" icon={FiGrid}>
           Departamentos
         </MenuButton>
+      </Container>
+      <Container>
         <MenuButton to="/listEquipament" icon={FiPackage}>
           Equipamentos
         </MenuButton>
 
-        <MenuButton to="/listEquipament" icon={FiPackage}>
-          Ordens de Serviços
+        <MenuButton to="/listMaintenanceTypes" icon={FiPackage}>
+          Tipos de Manutenção
         </MenuButton>
       </Container>
     </Content>

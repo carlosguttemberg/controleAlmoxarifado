@@ -18,6 +18,9 @@ import ListDepartament from '../pages/ListDepartament';
 import Equipament from '../pages/Equipament';
 import ListEquipament from '../pages/ListEquipament';
 
+import ListMaintenanceTypes from '../pages/ListMaintenanceTypes';
+import MaintenanceTypes from '../pages/MaintenanceTypes';
+
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={Dashboard} />
@@ -36,6 +39,13 @@ const Routes: React.FC = () => (
 
     <Route path="/listEquipament" exact component={ListEquipament} />
     <Route path="/equipament" exact component={Equipament} />
+
+    <Route
+      path="/listMaintenanceTypes"
+      exact
+      component={ListMaintenanceTypes}
+    />
+    <Route path="/maintenanceTypes" exact component={MaintenanceTypes} />
 
     <Route path="/dashboard" exact component={Dashboard} isPrivate />
   </Switch>
