@@ -26,13 +26,16 @@ const Dashboard: React.FC = () => {
           Departamentos
         </MenuButton>
       </Container>
+
       <Container>
         <MenuButton to="/listEquipament" icon={FiPackage}>
           Equipamentos
         </MenuButton>
-
         <MenuButton to="/listMaintenanceTypes" icon={FiPackage}>
           Tipos de Manutenção
+        </MenuButton>
+        <MenuButton to="/listCalibrationTypes" icon={FiPackage}>
+          Tipos de Calibração
         </MenuButton>
       </Container>
     </Content>

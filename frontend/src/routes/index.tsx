@@ -21,6 +21,9 @@ import ListEquipament from '../pages/ListEquipament';
 import ListMaintenanceTypes from '../pages/ListMaintenanceTypes';
 import MaintenanceTypes from '../pages/MaintenanceTypes';
 
+import ListCalibrationTypes from '../pages/ListCalibrationTypes';
+import CalibrationTypes from '../pages/CalibrationTypes';
+
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={Dashboard} />
@@ -46,6 +49,13 @@ const Routes: React.FC = () => (
       component={ListMaintenanceTypes}
     />
     <Route path="/maintenanceTypes" exact component={MaintenanceTypes} />
+
+    <Route
+      path="/listCalibrationTypes"
+      exact
+      component={ListCalibrationTypes}
+    />
+    <Route path="/calibrationTypes" exact component={CalibrationTypes} />
 
     <Route path="/dashboard" exact component={Dashboard} isPrivate />
   </Switch>
