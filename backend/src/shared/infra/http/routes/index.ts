@@ -7,6 +7,7 @@ import departamentsRouter from '@modules/departaments/infra/http/routes/departam
 import equipamentsRouter from '@modules/equipaments/infra/http/routes/equipaments.routes';
 import maintenanceTypesRouter from '@modules/maintenanceTypes/infra/http/routes/maintenanceTypes.routes';
 import calibrationTypesRouter from '@modules/calibrationTypes/infra/http/routes/calibrationTypes.routes';
+import checkListCalibrationRouter from '@modules/checkListCalibration/infra/http/routes/checkListCalibration.routes';
 
 const routes = Router();
 
@@ -17,5 +18,6 @@ routes.use('/departaments', departamentsRouter);
 routes.use('/equipaments', equipamentsRouter);
 routes.use('/maintenanceTypes', maintenanceTypesRouter);
 routes.use('/calibrationTypes', calibrationTypesRouter);
+routes.use('/checkListCalibration', checkListCalibrationRouter);
 
 export default routes;
