@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import CalibrationTypesController from '@modules/checkListCalibration/infra/http/controllers/CalibrationTypesController';
+import CalibrationTypesController from '@modules/checkListCalibration/infra/http/controllers/CheckListCalibrationTypesController';
 
 const checkListCalibrationRouter = Router();
 const checkListCalibrationController = new CalibrationTypesController();

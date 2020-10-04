@@ -16,7 +16,7 @@ interface IMyRequest extends Request {
   };
 }
 
-export default class CalibrationTypesController {
+export default class CheckListCalibrationTypesController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { name } = request.body;
 
