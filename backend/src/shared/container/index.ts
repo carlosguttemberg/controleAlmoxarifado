@@ -15,6 +15,9 @@ import DepartamentsRepository from '@modules/departaments/infra/typeorm/reposito
 import IEquipamentsRepository from '@modules/equipaments/repositories/IEquipamentsRepository';
 import EquipamentsRepository from '@modules/equipaments/infra/typeorm/repositories/EquipamentsRepository';
 
+import IMaintenanceTypesRepository from '@modules/maintenanceTypes/repositories/IMaintenanceTypesRepository';
+import MaintenanceTypesRepository from '@modules/maintenanceTypes/infra/typeorm/repositories/MaintenanceTypesRepository';
+
 container.registerSingleton<IEmployeesRepository>(
   'EmployeesRepository',
   EmployeesRepository,
@@ -38,4 +41,9 @@ container.registerSingleton<IDepartamentsRepository>(
 container.registerSingleton<IEquipamentsRepository>(
   'EquipamentsRepository',
   EquipamentsRepository,
+);
+
+container.registerSingleton<IMaintenanceTypesRepository>(
+  'MaintenanceTypesRepository',
+  MaintenanceTypesRepository,
 );
