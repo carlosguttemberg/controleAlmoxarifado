@@ -37,6 +37,9 @@ const Dashboard: React.FC = () => {
         <MenuButton to="/listCalibrationTypes" icon={FiPackage}>
           Tipos de Calibração
         </MenuButton>
+        <MenuButton to="/listCheckListCalibration" icon={FiPackage}>
+          CheckList de Calibração
+        </MenuButton>
       </Container>
     </Content>
   );
