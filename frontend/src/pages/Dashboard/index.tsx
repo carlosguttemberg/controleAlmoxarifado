@@ -41,6 +41,12 @@ const Dashboard: React.FC = () => {
           CheckList de Calibração
         </MenuButton>
       </Container>
+
+      <Container>
+        <MenuButton to="/listCheckListMaintenance" icon={FiPackage}>
+          CheckList de Manutenção
+        </MenuButton>
+      </Container>
     </Content>
   );
 };

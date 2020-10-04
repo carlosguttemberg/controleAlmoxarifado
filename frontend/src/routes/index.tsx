@@ -27,6 +27,9 @@ import CalibrationTypes from '../pages/CalibrationTypes';
 import ListCheckListCalibration from '../pages/ListCheckListCalibration';
 import CheckListCalibration from '../pages/CheckListCalibration';
 
+import ListCheckListMaintenance from '../pages/ListCheckListMaintenance';
+import CheckListMaintenance from '../pages/CheckListMaintenance';
+
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={Dashboard} />
@@ -69,6 +72,17 @@ const Routes: React.FC = () => (
       path="/checkListCalibration"
       exact
       component={CheckListCalibration}
+    />
+
+    <Route
+      path="/listCheckListMaintenance"
+      exact
+      component={ListCheckListMaintenance}
+    />
+    <Route
+      path="/checkListMaintenance"
+      exact
+      component={CheckListMaintenance}
     />
 
     <Route path="/dashboard" exact component={Dashboard} isPrivate />
