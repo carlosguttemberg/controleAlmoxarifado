@@ -9,6 +9,7 @@ import maintenanceTypesRouter from '@modules/maintenanceTypes/infra/http/routes/
 import calibrationTypesRouter from '@modules/calibrationTypes/infra/http/routes/calibrationTypes.routes';
 import checkListCalibrationRouter from '@modules/checkListCalibration/infra/http/routes/checkListCalibration.routes';
 import checkListMaintenanceRouter from '@modules/checkListMaintenance/infra/http/routes/checkListMaintenance.routes';
+import calibrationsRouter from '@modules/calibrations/infra/http/routes/calibrations.routes';
 
 const routes = Router();
 
@@ -21,5 +22,6 @@ routes.use('/maintenanceTypes', maintenanceTypesRouter);
 routes.use('/calibrationTypes', calibrationTypesRouter);
 routes.use('/checkListCalibration', checkListCalibrationRouter);
 routes.use('/checkListMaintenance', checkListMaintenanceRouter);
+routes.use('/calibrations', calibrationsRouter);
 
 export default routes;
