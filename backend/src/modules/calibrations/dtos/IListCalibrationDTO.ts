@@ -3,4 +3,5 @@ export default interface IListCalibrationtDTO {
   calibrationType_id: string;
   employee_id: string;
   status: string;
+  date: Date;
 }

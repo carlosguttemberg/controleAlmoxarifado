@@ -11,6 +11,7 @@ interface IFilters {
   employee_id?: string;
   equipament_id?: string;
   status?: string;
+  date?: Date;
 }
 
 class CalibrationsRepository implements ICalibrationsRepository {
@@ -21,13 +22,13 @@ class CalibrationsRepository implements ICalibrationsRepository {
   }
 
   public async create(
-    equipamentData: ICreateCalibrationDTO,
+    calibrationData: ICreateCalibrationDTO,
   ): Promise<Calibration> {
-    const equipament = this.ormRepository.create(equipamentData);
+    const calibration = this.ormRepository.create(calibrationData);
 
-    await this.ormRepository.save(equipament);
+    await this.ormRepository.save(calibration);
 
-    return equipament;
+    return calibration;
   }
 
   public async list({
@@ -35,6 +36,7 @@ class CalibrationsRepository implements ICalibrationsRepository {
     employee_id,
     equipament_id,
     status,
+    date,
   }: IListCalibrationDTO): Promise<Calibration[]> {
     const filters: IFilters[] = [];
 
@@ -52,6 +54,10 @@ class CalibrationsRepository implements ICalibrationsRepository {
 
     if (status) {
       filters.push({ status });
+    }
+
+    if (date) {
+      filters.push({ date });
     }
 
     const calibrations = await this.ormRepository.find({

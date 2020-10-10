@@ -46,6 +46,11 @@ export default class CreateCalibration1602346497267
             isNullable: false,
           },
           {
+            name: 'date',
+            type: 'timestamp with time zone',
+            isNullable: false,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

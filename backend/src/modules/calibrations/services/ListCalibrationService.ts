@@ -18,12 +18,14 @@ class ListCalibrationService {
     employee_id,
     equipament_id,
     status,
+    date,
   }: IListCalibrationDTO): Promise<Calibration[]> {
     const calibration = await this.calibrationsRepository.list({
       calibrationType_id,
       employee_id,
       equipament_id,
       status,
+      date,
     });
 
     return calibration;

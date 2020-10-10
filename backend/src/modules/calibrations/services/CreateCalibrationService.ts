@@ -18,12 +18,14 @@ class CreateCalibrationService {
     employee_id,
     equipament_id,
     value,
+    date,
   }: ICreateCalibrationDTO): Promise<Calibration> {
     const calibration = await this.calibrationsRepository.create({
       calibrationType_id,
       employee_id,
       equipament_id,
       value,
+      date,
     });
 
     return calibration;

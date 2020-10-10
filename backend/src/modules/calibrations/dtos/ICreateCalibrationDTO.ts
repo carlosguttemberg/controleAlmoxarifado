@@ -3,4 +3,5 @@ export default interface ICreateEquipamentDTO {
   employee_id: string;
   calibrationType_id: string;
   value: number;
+  date: Date;
 }
