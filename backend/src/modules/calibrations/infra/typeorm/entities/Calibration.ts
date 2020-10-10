@@ -44,7 +44,7 @@ class Calibrations {
   @JoinColumn({ name: 'calibrationType_id' })
   calibrationTypes: CalibrationTypes;
 
-  @Column('time with time zone')
+  @Column()
   date: Date;
 
   @CreateDateColumn()

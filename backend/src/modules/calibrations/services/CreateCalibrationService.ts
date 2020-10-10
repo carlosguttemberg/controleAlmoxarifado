@@ -6,6 +6,8 @@ import { inject, injectable } from 'tsyringe';
 import ICreateCalibrationDTO from '@modules/calibrations/dtos/ICreateCalibrationDTO';
 import ICalibrationsRepository from '@modules/calibrations/repositories/ICalibrationsRepository';
 
+import formatDateToAmerican from '@shared/Utils/formatDateToAmerican';
+
 @injectable()
 class CreateCalibrationService {
   constructor(
@@ -20,12 +22,14 @@ class CreateCalibrationService {
     value,
     date,
   }: ICreateCalibrationDTO): Promise<Calibration> {
+    const formatDate = formatDateToAmerican(date);
+
     const calibration = await this.calibrationsRepository.create({
       calibrationType_id,
       employee_id,
       equipament_id,
       value,
-      date,
+      date: formatDate,
     });
 
     return calibration;

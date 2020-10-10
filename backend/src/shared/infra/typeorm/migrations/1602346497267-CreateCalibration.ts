@@ -47,7 +47,7 @@ export default class CreateCalibration1602346497267
           },
           {
             name: 'date',
-            type: 'timestamp with time zone',
+            type: 'timestamp',
             isNullable: false,
           },
           {
