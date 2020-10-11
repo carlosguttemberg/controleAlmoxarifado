@@ -1,6 +1,8 @@
 import { getRepository, Repository } from 'typeorm';
 
 import Maintenance from '@modules/maintenances/infra/typeorm/entities/Maintenance';
+import CheckListMaintenance from '@modules/checkListMaintenance/infra/typeorm/entities/CheckListMaintenance';
+import MaintenanceCheckList from '@modules/maintenancesCheckList/infra/typeorm/entities/MaintenanceCheckList';
 import ICreateMaintenancesDTO from '@modules/maintenances/dtos/ICreateMaintenancesDTO';
 
 import IListMaintenancesDTO from '@modules/maintenances/dtos/IListMaintenancesDTO';
@@ -24,9 +26,27 @@ class MaintenancesRepository implements IMaintenancesRepository {
   public async create(
     maintenanceData: ICreateMaintenancesDTO,
   ): Promise<Maintenance> {
+    const checkListMaintenanceRepository = getRepository(CheckListMaintenance);
+    const maintenanceCheckListRepository = getRepository(MaintenanceCheckList);
+
+    const maintenanceCheckList: MaintenanceCheckList[] = [];
+
+    const checkListMaintenances = await checkListMaintenanceRepository.find();
+
     const maintenance = this.ormRepository.create(maintenanceData);
 
     await this.ormRepository.save(maintenance);
+
+    checkListMaintenances.forEach(checkListMaintenance => {
+      maintenanceCheckList.push(
+        maintenanceCheckListRepository.create({
+          maintenance_id: maintenance.id,
+          checkListMaintenance_id: checkListMaintenance.id,
+        }),
+      );
+    });
+
+    await maintenanceCheckListRepository.save(maintenanceCheckList);
 
     return maintenance;
   }
