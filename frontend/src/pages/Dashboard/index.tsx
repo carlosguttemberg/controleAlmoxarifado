@@ -40,15 +40,17 @@ const Dashboard: React.FC = () => {
         <MenuButton to="/listCheckListCalibration" icon={FiPackage}>
           CheckList de Calibração
         </MenuButton>
-
-        <MenuButton to="/listCalibration" icon={FiPackage}>
-          Calibração
-        </MenuButton>
       </Container>
 
       <Container>
         <MenuButton to="/listCheckListMaintenance" icon={FiPackage}>
           CheckList de Manutenção
+        </MenuButton>
+        <MenuButton to="/listCalibration" icon={FiPackage}>
+          Calibração
+        </MenuButton>
+        <MenuButton to="/listMaintenance" icon={FiPackage}>
+          Manutenção
         </MenuButton>
       </Container>
     </Content>
