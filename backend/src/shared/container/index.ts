@@ -30,6 +30,9 @@ import CheckListMaintenanceRepository from '@modules/checkListMaintenance/infra/
 import ICalibrationsRepository from '@modules/calibrations/repositories/ICalibrationsRepository';
 import CalibrationsRepository from '@modules/calibrations/infra/typeorm/repositories/CalibrationsRepository';
 
+import IMaintenancesRepository from '@modules/maintenances/repositories/IMaintenancesRepository';
+import MaintenancesRepository from '@modules/maintenances/infra/typeorm/repositories/MaintenancesRepository';
+
 container.registerSingleton<IEmployeesRepository>(
   'EmployeesRepository',
   EmployeesRepository,
@@ -78,4 +81,9 @@ container.registerSingleton<ICheckListMaintenanceRepository>(
 container.registerSingleton<ICalibrationsRepository>(
   'CalibrationsRepository',
   CalibrationsRepository,
+);
+
+container.registerSingleton<IMaintenancesRepository>(
+  'MaintenancesRepository',
+  MaintenancesRepository,
 );
