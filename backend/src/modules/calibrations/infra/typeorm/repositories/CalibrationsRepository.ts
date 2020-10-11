@@ -1,6 +1,8 @@
 import { getRepository, Repository } from 'typeorm';
 
 import Calibration from '@modules/calibrations/infra/typeorm/entities/Calibration';
+import CheckListCalibration from '@modules/checkListCalibration/infra/typeorm/entities/CheckListCalibration';
+import CalibrationCheckList from '@modules/calibrationCheckList/infra/typeorm/entities/CalibrationCheckList';
 import ICreateCalibrationDTO from '@modules/calibrations/dtos/ICreateCalibrationDTO';
 
 import IListCalibrationDTO from '@modules/calibrations/dtos/IListCalibrationDTO';
@@ -24,9 +26,25 @@ class CalibrationsRepository implements ICalibrationsRepository {
   public async create(
     calibrationData: ICreateCalibrationDTO,
   ): Promise<Calibration> {
+    const checkListCalibrationRepository = getRepository(CheckListCalibration);
+    const calibrationCheckListRepository = getRepository(CalibrationCheckList);
     const calibration = this.ormRepository.create(calibrationData);
+    const calibrationCheckList: CalibrationCheckList[] = [];
+
+    const checkListCalibrations = await checkListCalibrationRepository.find();
 
     await this.ormRepository.save(calibration);
+
+    checkListCalibrations.forEach(checkListCalibration => {
+      calibrationCheckList.push(
+        calibrationCheckListRepository.create({
+          calibration_id: calibration.id,
+          checkListCalibration_id: checkListCalibration.id,
+        }),
+      );
+    });
+
+    await calibrationCheckListRepository.save(calibrationCheckList);
 
     return calibration;
   }
