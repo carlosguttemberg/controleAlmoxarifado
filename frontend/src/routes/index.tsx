@@ -34,6 +34,7 @@ import ListCalibration from '../pages/ListCalibration';
 import Calibration from '../pages/Calibration';
 
 import ListMaintenance from '../pages/ListMaintenance';
+import Maintenance from '../pages/Maintenance';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -94,6 +95,7 @@ const Routes: React.FC = () => (
     <Route path="/calibration" exact component={Calibration} />
 
     <Route path="/listMaintenance" exact component={ListMaintenance} />
+    <Route path="/maintenance" exact component={Maintenance} />
 
     <Route path="/dashboard" exact component={Dashboard} isPrivate />
   </Switch>

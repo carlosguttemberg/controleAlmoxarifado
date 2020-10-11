@@ -123,7 +123,7 @@ const ListMaintenance: React.FC = () => {
               </Link>
               <h1>Pesquisa de Manutenções</h1>
             </Header>
-            <Link to="/calibration">
+            <Link to="/maintenance">
               <h3>
                 <FiPlus style={{ marginRight: '5px' }} />
                 Novo

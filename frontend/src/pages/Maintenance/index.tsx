@@ -19,7 +19,7 @@ import Button from '../../components/Button';
 
 import { Container, Content, Background, AnimationContainer } from './styles';
 
-interface CalibrationFormData {
+interface MaintenanceFormData {
   date: Date;
 }
 
@@ -33,7 +33,7 @@ interface ListEmployeeFormData {
   id: string;
 }
 
-interface ListCalibrationTypeFormData {
+interface ListMaintenanceTypeFormData {
   name: string;
   id: string;
 }
@@ -45,8 +45,8 @@ const Calibration: React.FC = () => {
 
   const [equipaments, setEquipaments] = useState<ListEquipamentFormData[]>([]);
   const [employees, setEmployees] = useState<ListEmployeeFormData[]>([]);
-  const [calibrationTypes, setCalibrationTypes] = useState<
-    ListCalibrationTypeFormData[]
+  const [maintenanceTypes, setMaintenanceTypes] = useState<
+    ListMaintenanceTypeFormData[]
   >([]);
 
   async function loadEquipaments() {
@@ -59,19 +59,19 @@ const Calibration: React.FC = () => {
     setEmployees(response.data);
   }
 
-  async function loadCalibrationTypes() {
-    const response = await api.get('/calibrationTypes');
-    setCalibrationTypes(response.data);
+  async function loadMaintenanceTypes() {
+    const response = await api.get('/maintenanceTypes');
+    setMaintenanceTypes(response.data);
   }
 
   useEffect(() => {
     loadEquipaments();
     loadEmployees();
-    loadCalibrationTypes();
+    loadMaintenanceTypes();
   }, []);
 
   const handleSubmit = useCallback(
-    async (data: CalibrationFormData) => {
+    async (data: MaintenanceFormData) => {
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
@@ -82,14 +82,14 @@ const Calibration: React.FC = () => {
           abortEarly: false,
         });
 
-        await api.post('/calibrations', data);
+        await api.post('/maintenances', data);
 
         history.push('/');
 
         addToast({
           type: 'success',
           title: 'Cadastro realizado!',
-          description: 'Calibração cadastrada!',
+          description: 'Manutenção cadastrada!',
         });
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
@@ -115,7 +115,7 @@ const Calibration: React.FC = () => {
       <Content>
         <AnimationContainer>
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Cadastro de Calibrações</h1>
+            <h1>Cadastro de Manutenções</h1>
 
             <Input name="date" icon={FiCalendar} placeholder="Data" />
 
@@ -135,12 +135,12 @@ const Calibration: React.FC = () => {
               ))}
             </Select>
 
-            <Select name="calibrationType_id" icon={FiGrid}>
+            <Select name="maintenanceType_id" icon={FiGrid}>
               <option value="">Tipo</option>
 
-              {calibrationTypes.map(calibrationType => (
-                <option value={calibrationType.id}>
-                  {calibrationType.name}
+              {maintenanceTypes.map(maintenanceType => (
+                <option value={maintenanceType.id}>
+                  {maintenanceType.name}
                 </option>
               ))}
             </Select>
@@ -150,7 +150,7 @@ const Calibration: React.FC = () => {
             <Button type="submit">Cadastrar</Button>
           </Form>
 
-          <Link to="/listCalibration">
+          <Link to="/listMaintenance">
             <FiArrowLeft />
             Voltar
           </Link>
