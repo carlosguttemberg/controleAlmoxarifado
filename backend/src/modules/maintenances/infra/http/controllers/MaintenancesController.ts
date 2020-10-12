@@ -13,6 +13,7 @@ interface IMyRequest extends Request {
     equipament_id: string;
     status: string;
     date: any;
+    id: string;
   };
 }
 
@@ -49,6 +50,7 @@ export default class MaintenancesController {
       equipament_id,
       status,
       date,
+      id,
     }: IListMaintenancesDTO = request.query;
 
     const listMaintenance = container.resolve(ListMaintenanceService);
@@ -59,6 +61,7 @@ export default class MaintenancesController {
       equipament_id,
       status,
       date,
+      id,
     });
 
     return response.json(maintenances);

@@ -1,9 +1,9 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
+import { useHistory, Link } from 'react-router-dom';
 import { FiArrowLeft, FiPlus, FiGrid } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
 
 import api from '../../services/api';
 
@@ -31,6 +31,7 @@ interface ListMaintenanceFormData {
   maintenanceTypes: ListMaintenanceypeFormData;
   value: number;
   status: string;
+  id: string;
 }
 
 interface ListEquipamentFormData {
@@ -49,6 +50,7 @@ interface ListMaintenanceypeFormData {
 }
 
 const ListMaintenance: React.FC = () => {
+  const history = useHistory();
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
   const [maintenances, setMaintenances] = useState<ListMaintenanceFormData[]>(
@@ -111,6 +113,16 @@ const ListMaintenance: React.FC = () => {
     },
     [addToast],
   );
+
+  async function handleEditMaintenance(id: string, e: React.FormEvent) {
+    e.preventDefault();
+
+    try {
+      history.push({ pathname: '/editMaintenance', state: { id } });
+    } catch (err) {
+      alert('Something is wrong.');
+    }
+  }
 
   return (
     <Container>
@@ -183,7 +195,7 @@ const ListMaintenance: React.FC = () => {
 
               <tbody>
                 {maintenances.map(maintenance => (
-                  <tr>
+                  <tr onClick={e => handleEditMaintenance(maintenance.id, e)}>
                     <td>{formatDate(maintenance.date)}</td>
                     <td>{maintenance.equipament.name}</td>
                     <td>{maintenance.maintenanceTypes.name}</td>

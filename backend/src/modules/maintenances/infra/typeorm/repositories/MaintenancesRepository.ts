@@ -14,6 +14,7 @@ interface IFilters {
   equipament_id?: string;
   status?: string;
   date?: Date;
+  id?: string;
 }
 
 class MaintenancesRepository implements IMaintenancesRepository {
@@ -57,8 +58,13 @@ class MaintenancesRepository implements IMaintenancesRepository {
     equipament_id,
     status,
     date,
+    id,
   }: IListMaintenancesDTO): Promise<Maintenance[]> {
     const filters: IFilters[] = [];
+
+    if (id) {
+      filters.push({ id });
+    }
 
     if (maintenanceType_id) {
       filters.push({ maintenanceType_id });

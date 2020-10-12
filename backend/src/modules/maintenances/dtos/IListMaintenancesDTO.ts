@@ -4,4 +4,5 @@ export default interface IListMaintenancesDTO {
   employee_id: string;
   status: string;
   date: Date;
+  id: string;
 }

@@ -12,6 +12,7 @@ import checkListMaintenanceRouter from '@modules/checkListMaintenance/infra/http
 import calibrationsRouter from '@modules/calibrations/infra/http/routes/calibrations.routes';
 import maintenancesRouter from '@modules/maintenances/infra/http/routes/maintenances.routes';
 import calibrationCheckListRouter from '@modules/calibrationCheckList/infra/http/routes/calibrationCheckList.routes';
+import maintenanceCheckListRouter from '@modules/maintenancesCheckList/infra/http/routes/maintenanceCheckList.routes';
 
 const routes = Router();
 
@@ -27,5 +28,6 @@ routes.use('/checkListMaintenance', checkListMaintenanceRouter);
 routes.use('/calibrations', calibrationsRouter);
 routes.use('/maintenances', maintenancesRouter);
 routes.use('/calibrationCheckList', calibrationCheckListRouter);
+routes.use('/maintenanceCheckList', maintenanceCheckListRouter);
 
 export default routes;

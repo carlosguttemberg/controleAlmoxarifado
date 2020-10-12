@@ -19,6 +19,7 @@ class ListMaintenanceService {
     equipament_id,
     status,
     date,
+    id,
   }: IListMaintenancesDTO): Promise<Maintenance[]> {
     const maintenance = await this.maintenancesRepository.list({
       maintenanceType_id,
@@ -26,6 +27,7 @@ class ListMaintenanceService {
       equipament_id,
       status,
       date,
+      id,
     });
 
     return maintenance;
