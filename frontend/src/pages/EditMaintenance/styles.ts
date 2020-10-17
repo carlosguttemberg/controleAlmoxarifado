@@ -85,3 +85,8 @@ export const Body = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const ContainerButtons = styled.div`
+  justify-content: space-between;
+  display: flex;
+`;

@@ -16,8 +16,15 @@ import Table from '../../components/Table';
 import formatValue from '../../utils/formatValue';
 import formatDate from '../../utils/formatDate';
 import returnStatus from '../../utils/returnStatus';
+import Button from '../../components/Button';
 
-import { Container, AnimationContainer, Header, Content } from './styles';
+import {
+  Container,
+  AnimationContainer,
+  Header,
+  Content,
+  ContainerButtons,
+} from './styles';
 
 interface ListMaintenanceFormData {
   equipament_id: string;
@@ -78,30 +85,52 @@ const ListMaintenance: React.FC = () => {
     history.push('/');
   }
 
-  async function loadMaintenances() {
+  const handleLoadMaintenances = useCallback(async () => {
     const response = await api.get('/maintenances', {
       params: { id: location.state.id },
     });
 
     setStatus(response.data[0].status);
 
-    console.log(response.data[0].status);
-
     setMaintenances(response.data);
-  }
+  }, [location.state.id]);
 
-  async function loadCheckList() {
+  const handleLoadCheckList = useCallback(async () => {
     const response = await api.get('/maintenanceCheckList', {
       params: { maintenance_id: location.state.id },
     });
 
     setCheckListMaintenances(response.data);
-  }
+  }, [location.state.id]);
+
+  const handleUpdateRealizeMaintenance = useCallback(async () => {
+    const response = await api.patch('/maintenances', {
+      id: location.state.id,
+      status: 'R',
+    });
+
+    if (response.status === 200) {
+      handleLoadMaintenances();
+      handleLoadCheckList();
+    }
+  }, [location.state.id, handleLoadMaintenances, handleLoadCheckList]);
+
+  const handleUpdateCancelMaintenance = useCallback(async () => {
+    const response = await api.patch('/maintenances', {
+      id: location.state.id,
+      status: 'C',
+    });
+
+    if (response.status === 200) {
+      handleLoadMaintenances();
+      handleLoadCheckList();
+    }
+  }, [location.state.id, handleLoadMaintenances, handleLoadCheckList]);
 
   useEffect(() => {
-    loadMaintenances();
-    loadCheckList();
-  });
+    handleLoadMaintenances();
+    handleLoadCheckList();
+  }, [handleLoadMaintenances, handleLoadCheckList]);
 
   const handleSubmit = useCallback(
     async ({
@@ -140,20 +169,37 @@ const ListMaintenance: React.FC = () => {
         <AnimationContainer>
           <Form ref={formRef} onSubmit={handleSubmit}>
             <Header>
-              <Header>
-                <Link to="/listMaintenance">
-                  <FiArrowLeft size={30} />
-                </Link>
-                <h1>Editar de Manutenções</h1>
-              </Header>
-
+              <Link to="/listMaintenance">
+                <FiArrowLeft size={30} />
+              </Link>
+              <h1>Editar de Manutenções</h1>
               {status === 'P' && (
-                <Link to="/maintenance">
-                  <h3>
-                    <FiCheck style={{ marginRight: '5px' }} />
+                <ContainerButtons>
+                  <Button
+                    style={{
+                      float: 'right',
+                      width: '50%',
+                      marginRight: '10px',
+                    }}
+                    type="button"
+                    id="btnConcluir"
+                    onClick={handleUpdateRealizeMaintenance}
+                  >
                     Concluir
-                  </h3>
-                </Link>
+                  </Button>
+                  <Button
+                    style={{
+                      float: 'right',
+                      width: '50%',
+                      background: '#ff002f',
+                    }}
+                    type="button"
+                    id="btnConcluir"
+                    onClick={handleUpdateCancelMaintenance}
+                  >
+                    Cancelar
+                  </Button>
+                </ContainerButtons>
               )}
             </Header>
             <hr />

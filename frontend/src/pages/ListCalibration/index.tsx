@@ -60,26 +60,26 @@ const ListCalibration: React.FC = () => {
     ListCalibrationTypeFormData[]
   >([]);
 
-  async function loadEquipaments() {
+  const handleLoadEquipaments = useCallback(async () => {
     const response = await api.get('/equipaments');
     setEquipaments(response.data);
-  }
+  }, []);
 
-  async function loadEmployees() {
+  const handleLoadEmployees = useCallback(async () => {
     const response = await api.get('/employees');
     setEmployees(response.data);
-  }
+  }, []);
 
-  async function loadCalibrationTypes() {
+  const handleLoadCalibrationTypes = useCallback(async () => {
     const response = await api.get('/calibrationTypes');
     setCalibrationTypes(response.data);
-  }
+  }, []);
 
   useEffect(() => {
-    loadEquipaments();
-    loadEmployees();
-    loadCalibrationTypes();
-  }, []);
+    handleLoadEquipaments();
+    handleLoadEmployees();
+    handleLoadCalibrationTypes();
+  }, [handleLoadEquipaments, handleLoadEmployees, handleLoadCalibrationTypes]);
 
   const handleSubmit = useCallback(
     async ({

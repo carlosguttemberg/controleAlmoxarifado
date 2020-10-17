@@ -76,6 +76,12 @@ const Calibration: React.FC = () => {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
           date: Yup.string().required('Data obrigatória'),
+          equipament_id: Yup.string().required('Equipamento obrigatório'),
+          employee_id: Yup.string().required('Funcionário obrigatório'),
+          calibrationType_id: Yup.string().required('Tipo obrigatório'),
+          value: Yup.number()
+            .typeError('Valor precisa ser numérico')
+            .required('Valor obrigatório'),
         });
 
         await schema.validate(data, {
