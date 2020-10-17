@@ -3,7 +3,7 @@ import { FiArrowLeft, FiPlus, FiGrid } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import api from '../../services/api';
 
@@ -31,6 +31,7 @@ interface ListCalibrationFormData {
   calibrationTypes: ListCalibrationTypeFormData;
   value: number;
   status: string;
+  id: string;
 }
 
 interface ListEquipamentFormData {
@@ -49,6 +50,7 @@ interface ListCalibrationTypeFormData {
 }
 
 const ListCalibration: React.FC = () => {
+  const history = useHistory();
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
   const [calibrations, setCalibrations] = useState<ListCalibrationFormData[]>(
@@ -110,6 +112,19 @@ const ListCalibration: React.FC = () => {
       }
     },
     [addToast],
+  );
+
+  const handleEditCalibration = useCallback(
+    (id: string, e: React.FormEvent) => {
+      e.preventDefault();
+
+      try {
+        history.push({ pathname: '/editCalibration', state: { id } });
+      } catch (err) {
+        alert('Something is wrong.');
+      }
+    },
+    [history],
   );
 
   return (
@@ -183,7 +198,10 @@ const ListCalibration: React.FC = () => {
 
               <tbody>
                 {calibrations.map(calibration => (
-                  <tr>
+                  <tr
+                    key={calibration.id}
+                    onClick={e => handleEditCalibration(calibration.id, e)}
+                  >
                     <td>{formatDate(calibration.date)}</td>
                     <td>{calibration.equipament.name}</td>
                     <td>{calibration.calibrationTypes.name}</td>

@@ -1,15 +1,10 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { useLocation, useHistory, Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
-import { FormHandles } from '@unform/core';
-import { Form } from '@unform/web';
-import * as Yup from 'yup';
 
 import api from '../../services/api';
 
 import { useToast } from '../../hooks/toast';
-
-import getValidationErrors from '../../utils/getValidationErrors';
 
 import Table from '../../components/Table';
 
@@ -26,14 +21,14 @@ import {
   ContainerButtons,
 } from './styles';
 
-interface ListMaintenanceFormData {
+interface ListCalibrationFormData {
   equipament_id: string;
   employee_id: string;
-  maintenanceType_id: string;
+  calibrationType_id: string;
   date: Date;
   equipament: ListEquipamentFormData;
   employee: ListEmployeeFormData;
-  maintenanceTypes: ListMaintenanceypeFormData;
+  calibrationTypes: ListMaintenanceypeFormData;
   value: number;
   id: string;
   status: string;
@@ -60,57 +55,56 @@ interface IState {
   };
 }
 
-interface CheckListMaintenance {
+interface CheckListCalibration {
   id: string;
   status: string;
-  checkListMaintenance: {
+  checkListCalibration: {
     name: string;
   };
 }
 
-const ListMaintenance: React.FC = () => {
+const EditCalibration: React.FC = () => {
   const location: IState = useLocation();
   const [status, setStatus] = useState('');
   const history = useHistory();
-  const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
-  const [maintenances, setMaintenances] = useState<ListMaintenanceFormData[]>(
+  const [calibrations, setCalibrations] = useState<ListCalibrationFormData[]>(
     [],
   );
-  const [checkListMaintenances, setCheckListMaintenances] = useState<
-    CheckListMaintenance[]
+  const [checkListCalibrations, setCheckListCalibrations] = useState<
+    CheckListCalibration[]
   >([]);
 
   if (typeof location.state === 'undefined') {
     history.push('/');
   }
 
-  const handleLoadMaintenances = useCallback(async () => {
-    const response = await api.get('/maintenances', {
+  const handleLoadCalibrations = useCallback(async () => {
+    const response = await api.get('/calibrations', {
       params: { id: location.state.id },
     });
 
     setStatus(response.data[0].status);
 
-    setMaintenances(response.data);
+    setCalibrations(response.data);
   }, [location.state.id]);
 
   const handleLoadCheckList = useCallback(async () => {
-    const response = await api.get('/maintenanceCheckList', {
-      params: { maintenance_id: location.state.id },
+    const response = await api.get('/calibrationCheckList', {
+      params: { calibration_id: location.state.id },
     });
 
-    setCheckListMaintenances(response.data);
+    setCheckListCalibrations(response.data);
   }, [location.state.id]);
 
   const handleUpdateRealizeMaintenance = useCallback(async () => {
-    const response = await api.patch('/maintenances', {
+    const response = await api.patch('/calibrations', {
       id: location.state.id,
       status: 'R',
     });
 
     if (response.status === 200) {
-      handleLoadMaintenances();
+      handleLoadCalibrations();
       handleLoadCheckList();
 
       addToast({
@@ -121,19 +115,19 @@ const ListMaintenance: React.FC = () => {
     }
   }, [
     location.state.id,
-    handleLoadMaintenances,
+    handleLoadCalibrations,
     handleLoadCheckList,
     addToast,
   ]);
 
   const handleUpdateCancelMaintenance = useCallback(async () => {
-    const response = await api.patch('/maintenances', {
+    const response = await api.patch('/calibrations', {
       id: location.state.id,
       status: 'C',
     });
 
     if (response.status === 200) {
-      handleLoadMaintenances();
+      handleLoadCalibrations();
       handleLoadCheckList();
 
       addToast({
@@ -144,7 +138,7 @@ const ListMaintenance: React.FC = () => {
     }
   }, [
     location.state.id,
-    handleLoadMaintenances,
+    handleLoadCalibrations,
     handleLoadCheckList,
     addToast,
   ]);
@@ -152,8 +146,8 @@ const ListMaintenance: React.FC = () => {
   const handleUpdateRealizeCheckList = useCallback(
     async idCheckList => {
       try {
-        const response = await api.patch('/maintenanceCheckList', {
-          maintenance_id: location.state.id,
+        const response = await api.patch('/calibrationCheckList', {
+          calibration_id: location.state.id,
           id: idCheckList,
           status: 'R',
         });
@@ -187,8 +181,8 @@ const ListMaintenance: React.FC = () => {
   const handleUpdateCancelCheckList = useCallback(
     async idCheckList => {
       try {
-        const response = await api.patch('/maintenanceCheckList', {
-          maintenance_id: location.state.id,
+        const response = await api.patch('/calibrationCheckList', {
+          calibration_id: location.state.id,
           id: idCheckList,
           status: 'C',
         });
@@ -220,48 +214,17 @@ const ListMaintenance: React.FC = () => {
   );
 
   useEffect(() => {
-    handleLoadMaintenances();
+    handleLoadCalibrations();
     handleLoadCheckList();
-  }, [handleLoadMaintenances, handleLoadCheckList]);
-
-  const handleSubmit = useCallback(
-    async ({
-      maintenanceType_id,
-      date,
-      employee_id,
-      equipament_id,
-    }: ListMaintenanceFormData) => {
-      try {
-        const response = await api.get('/maintenances', {
-          params: { maintenanceType_id, date, employee_id, equipament_id },
-        });
-
-        setMaintenances(response.data);
-      } catch (error) {
-        if (error instanceof Yup.ValidationError) {
-          const errors = getValidationErrors(error);
-          formRef.current?.setErrors(errors);
-
-          return;
-        }
-
-        addToast({
-          type: 'error',
-          title: 'Erro na pesquisa',
-          description: 'Ocorreu um erro ao fazer a pesquisa, tente novamente',
-        });
-      }
-    },
-    [addToast],
-  );
+  }, [handleLoadCalibrations, handleLoadCheckList]);
 
   return (
     <Container>
       <Content>
         <AnimationContainer>
-          <Form ref={formRef} onSubmit={handleSubmit}>
+          <form>
             <Header>
-              <Link to="/listMaintenance">
+              <Link to="/listCalibration">
                 <FiArrowLeft size={30} />
               </Link>
               <h1>Editar Manutenções</h1>
@@ -295,7 +258,7 @@ const ListMaintenance: React.FC = () => {
               )}
             </Header>
             <hr />
-            {maintenances.length > 0 && (
+            {calibrations.length > 0 && (
               <Table>
                 <thead>
                   <tr>
@@ -309,14 +272,14 @@ const ListMaintenance: React.FC = () => {
                 </thead>
 
                 <tbody>
-                  {maintenances.map(maintenance => (
-                    <tr key={maintenance.id}>
-                      <td>{formatDate(maintenance.date)}</td>
-                      <td>{maintenance.equipament.name}</td>
-                      <td>{maintenance.maintenanceTypes.name}</td>
-                      <td>{maintenance.employee.name}</td>
-                      <td>{formatValue(maintenance.value)}</td>
-                      <td>{returnStatus(maintenance.status)}</td>
+                  {calibrations.map(calibration => (
+                    <tr key={calibration.id}>
+                      <td>{formatDate(calibration.date)}</td>
+                      <td>{calibration.equipament.name}</td>
+                      <td>{calibration.calibrationTypes.name}</td>
+                      <td>{calibration.employee.name}</td>
+                      <td>{formatValue(calibration.value)}</td>
+                      <td>{returnStatus(calibration.status)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -324,7 +287,7 @@ const ListMaintenance: React.FC = () => {
             )}
             <hr />
             <br />
-            {checkListMaintenances.length > 0 && (
+            {checkListCalibrations.length > 0 && (
               <Table>
                 <thead>
                   <tr>
@@ -335,19 +298,19 @@ const ListMaintenance: React.FC = () => {
                 </thead>
 
                 <tbody>
-                  {checkListMaintenances.map(checkListMaintenance => (
-                    <tr key={checkListMaintenance.id}>
-                      <td>{checkListMaintenance.checkListMaintenance.name}</td>
-                      <td>{returnStatus(checkListMaintenance.status)}</td>
+                  {checkListCalibrations.map(checkListCalibration => (
+                    <tr key={checkListCalibration.id}>
+                      <td>{checkListCalibration.checkListCalibration.name}</td>
+                      <td>{returnStatus(checkListCalibration.status)}</td>
                       <td>
-                        {status === 'P' && checkListMaintenance.status === 'P' && (
+                        {status === 'P' && checkListCalibration.status === 'P' && (
                           <>
                             <Button
                               style={{ width: '40%', marginRight: '5px' }}
                               id="btnConcluirCheckList"
                               onClick={() =>
                                 handleUpdateRealizeCheckList(
-                                  checkListMaintenance.id,
+                                  checkListCalibration.id,
                                 )}
                             >
                               Concluir
@@ -357,7 +320,7 @@ const ListMaintenance: React.FC = () => {
                               id="btnCancelarCheckList"
                               onClick={() =>
                                 handleUpdateCancelCheckList(
-                                  checkListMaintenance.id,
+                                  checkListCalibration.id,
                                 )}
                             >
                               Cancelar
@@ -370,11 +333,11 @@ const ListMaintenance: React.FC = () => {
                 </tbody>
               </Table>
             )}
-          </Form>
+          </form>
         </AnimationContainer>
       </Content>
     </Container>
   );
 };
 
-export default ListMaintenance;
+export default EditCalibration;

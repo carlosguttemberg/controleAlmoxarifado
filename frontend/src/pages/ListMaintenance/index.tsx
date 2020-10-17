@@ -114,15 +114,18 @@ const ListMaintenance: React.FC = () => {
     [addToast],
   );
 
-  async function handleEditMaintenance(id: string, e: React.FormEvent) {
-    e.preventDefault();
+  const handleEditMaintenance = useCallback(
+    (id: string, e: React.FormEvent) => {
+      e.preventDefault();
 
-    try {
-      history.push({ pathname: '/editMaintenance', state: { id } });
-    } catch (err) {
-      alert('Something is wrong.');
-    }
-  }
+      try {
+        history.push({ pathname: '/editMaintenance', state: { id } });
+      } catch (err) {
+        alert('Something is wrong.');
+      }
+    },
+    [history],
+  );
 
   return (
     <Container>
@@ -195,7 +198,10 @@ const ListMaintenance: React.FC = () => {
 
               <tbody>
                 {maintenances.map(maintenance => (
-                  <tr onClick={e => handleEditMaintenance(maintenance.id, e)}>
+                  <tr
+                    key={maintenance.id}
+                    onClick={e => handleEditMaintenance(maintenance.id, e)}
+                  >
                     <td>{formatDate(maintenance.date)}</td>
                     <td>{maintenance.equipament.name}</td>
                     <td>{maintenance.maintenanceTypes.name}</td>
