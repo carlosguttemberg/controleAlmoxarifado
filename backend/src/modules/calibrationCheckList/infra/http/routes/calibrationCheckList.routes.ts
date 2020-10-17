@@ -7,5 +7,6 @@ const calibrationCheckListController = new CalibrationCheckListController();
 
 checkListRouter.post('/', calibrationCheckListController.create);
 checkListRouter.get('/', calibrationCheckListController.list);
+checkListRouter.patch('/', calibrationCheckListController.update);
 
 export default checkListRouter;

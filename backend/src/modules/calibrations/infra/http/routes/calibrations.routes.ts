@@ -7,5 +7,6 @@ const calibrationsController = new CalibrationsController();
 
 calibrationRouter.post('/', calibrationsController.create);
 calibrationRouter.get('/', calibrationsController.list);
+calibrationRouter.patch('/', calibrationsController.update);
 
 export default calibrationRouter;

@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import CreateCalibrationCheckListService from '@modules/calibrationCheckList/services/CreateCalibrationCheckListService';
+import UpdateCalibrationCheckListService from '@modules/calibrationCheckList/services/UpdateCalibrationCheckListService';
 import ListCalibrationCheckListService from '@modules/calibrationCheckList/services/ListCalibrationCheckListService';
 import IListCalibrationtCheckListDTO from '@modules/calibrationCheckList/dtos/IListCalibrationtCheckListDTO';
 
@@ -45,6 +46,22 @@ export default class CalibrationCheckListController {
     const checkList = await listCheckList.execute({
       calibration_id,
       checkListCalibration_id,
+      status,
+    });
+
+    return response.json(checkList);
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const { id, calibration_id, status } = request.body;
+
+    const updateCheckList = container.resolve(
+      UpdateCalibrationCheckListService,
+    );
+
+    const checkList = await updateCheckList.execute({
+      id,
+      calibration_id,
       status,
     });
 

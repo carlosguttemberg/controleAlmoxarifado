@@ -6,7 +6,9 @@ import CalibrationCheckList from '@modules/calibrationCheckList/infra/typeorm/en
 import ICreateCalibrationDTO from '@modules/calibrations/dtos/ICreateCalibrationDTO';
 
 import IListCalibrationDTO from '@modules/calibrations/dtos/IListCalibrationDTO';
+import IUpdateCalibrationDTO from '@modules/calibrations/dtos/IUpdateCalibrationDTO';
 import ICalibrationsRepository from '@modules/calibrations/repositories/ICalibrationsRepository';
+import AppError from '@shared/errors/AppError';
 
 interface IFilters {
   calibrationType_id?: string;
@@ -14,6 +16,7 @@ interface IFilters {
   equipament_id?: string;
   status?: string;
   date?: Date;
+  id?: string;
 }
 
 class CalibrationsRepository implements ICalibrationsRepository {
@@ -55,6 +58,7 @@ class CalibrationsRepository implements ICalibrationsRepository {
     equipament_id,
     status,
     date,
+    id,
   }: IListCalibrationDTO): Promise<Calibration[]> {
     const filters: IFilters[] = [];
 
@@ -78,12 +82,38 @@ class CalibrationsRepository implements ICalibrationsRepository {
       filters.push({ date });
     }
 
+    if (id) {
+      filters.push({ id });
+    }
+
     const calibrations = await this.ormRepository.find({
       where: filters,
       relations: ['equipament', 'employee', 'calibrationTypes'],
     });
 
     return calibrations;
+  }
+
+  public async update({
+    id,
+    status,
+  }: IUpdateCalibrationDTO): Promise<Calibration> {
+    try {
+      if (!status) throw new AppError('Informe um Status');
+      if (!id) throw new AppError('Informe uma calibração');
+
+      const calibration = await this.ormRepository.findOne(id);
+
+      if (!calibration) throw new AppError('Calibração não encontrada');
+
+      calibration.status = status;
+
+      const updateCalibration = await this.ormRepository.save(calibration);
+
+      return updateCalibration;
+    } catch (error) {
+      return error.message;
+    }
   }
 }
 

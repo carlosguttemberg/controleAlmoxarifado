@@ -5,6 +5,7 @@ import { container } from 'tsyringe';
 import CreateCalibrationService from '@modules/calibrations/services/CreateCalibrationService';
 import ListCalibrationService from '@modules/calibrations/services/ListCalibrationService';
 import IListCalibrationDTO from '@modules/calibrations/dtos/IListCalibrationDTO';
+import UpdateCalibrationService from '@modules/calibrations/services/UpdateCalibrationService';
 
 interface IMyRequest extends Request {
   query: {
@@ -13,6 +14,7 @@ interface IMyRequest extends Request {
     equipament_id: string;
     status: string;
     date: any;
+    id: string;
   };
 }
 
@@ -49,6 +51,7 @@ export default class CalibrationsController {
       equipament_id,
       status,
       date,
+      id,
     }: IListCalibrationDTO = request.query;
 
     const listCalibration = container.resolve(ListCalibrationService);
@@ -59,8 +62,22 @@ export default class CalibrationsController {
       equipament_id,
       status,
       date,
+      id,
     });
 
     return response.json(calibrations);
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const { id, status } = request.body;
+
+    const updateCalibration = container.resolve(UpdateCalibrationService);
+
+    const calibration = await updateCalibration.execute({
+      id,
+      status,
+    });
+
+    return response.json(calibration);
   }
 }

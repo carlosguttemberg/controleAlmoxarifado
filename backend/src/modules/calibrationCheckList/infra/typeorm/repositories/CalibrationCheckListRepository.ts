@@ -6,6 +6,8 @@ import ICreateCalibrationCheckListDTO from '@modules/calibrationCheckList/dtos/I
 
 import IListCalibrationtCheckListDTO from '@modules/calibrationCheckList/dtos/IListCalibrationtCheckListDTO';
 import ICalibrationCheckListRepository from '@modules/calibrationCheckList/repositories/ICalibrationCheckListRepository';
+import IUpdateCalibrationCheckListDTO from '@modules/calibrationCheckList/dtos/IUpdateCalibrationCheckListDTO';
+import AppError from '@shared/errors/AppError';
 
 interface IFilters {
   checkListCalibration_id?: string;
@@ -56,6 +58,29 @@ class CalibrationCheckListRepository
     });
 
     return checkList;
+  }
+
+  public async update({
+    calibration_id,
+    id,
+    status,
+  }: IUpdateCalibrationCheckListDTO): Promise<CalibrationCheckList> {
+    try {
+      if (!calibration_id) throw new AppError('Informe uma Calibração');
+      if (!id) throw new AppError('Informe uma opção');
+
+      const checkList = await this.ormRepository.findOne(id);
+
+      if (!checkList) throw new AppError('Opção não encontrada');
+
+      checkList.status = status;
+
+      const checkListUpdate = await this.ormRepository.save(checkList);
+
+      return checkListUpdate;
+    } catch (error) {
+      return error.message;
+    }
   }
 }
 
