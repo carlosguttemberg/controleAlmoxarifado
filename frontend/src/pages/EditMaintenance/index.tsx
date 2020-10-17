@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { useLocation, useHistory, Link } from 'react-router-dom';
-import { FiArrowLeft, FiCheck } from 'react-icons/fi';
+import { FiArrowLeft } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -112,8 +112,19 @@ const ListMaintenance: React.FC = () => {
     if (response.status === 200) {
       handleLoadMaintenances();
       handleLoadCheckList();
+
+      addToast({
+        type: 'success',
+        title: 'Status alterado!',
+        description: 'Manutenção atualizada!',
+      });
     }
-  }, [location.state.id, handleLoadMaintenances, handleLoadCheckList]);
+  }, [
+    location.state.id,
+    handleLoadMaintenances,
+    handleLoadCheckList,
+    addToast,
+  ]);
 
   const handleUpdateCancelMaintenance = useCallback(async () => {
     const response = await api.patch('/maintenances', {
@@ -124,8 +135,89 @@ const ListMaintenance: React.FC = () => {
     if (response.status === 200) {
       handleLoadMaintenances();
       handleLoadCheckList();
+
+      addToast({
+        type: 'success',
+        title: 'Status alterado!',
+        description: 'Manutenção atualizada!',
+      });
     }
-  }, [location.state.id, handleLoadMaintenances, handleLoadCheckList]);
+  }, [
+    location.state.id,
+    handleLoadMaintenances,
+    handleLoadCheckList,
+    addToast,
+  ]);
+
+  const handleUpdateRealizeCheckList = useCallback(
+    async idCheckList => {
+      try {
+        const response = await api.patch('/maintenanceCheckList', {
+          maintenance_id: location.state.id,
+          id: idCheckList,
+          status: 'R',
+        });
+
+        if (!response || response.status !== 200) {
+          addToast({
+            type: 'error',
+            title: 'Oops!',
+            description: 'Um erro inesperado ocorreu!',
+          });
+        } else {
+          handleLoadCheckList();
+
+          addToast({
+            type: 'success',
+            title: 'Status alterado!',
+            description: 'Manutenção atualizada!',
+          });
+        }
+      } catch (error) {
+        addToast({
+          type: 'error',
+          title: 'Oops!',
+          description: 'Um erro inesperado ocorreu!',
+        });
+      }
+    },
+    [location.state.id, handleLoadCheckList, addToast],
+  );
+
+  const handleUpdateCancelCheckList = useCallback(
+    async idCheckList => {
+      try {
+        const response = await api.patch('/maintenanceCheckList', {
+          maintenance_id: location.state.id,
+          id: idCheckList,
+          status: 'C',
+        });
+
+        if (!response || response.status !== 200) {
+          addToast({
+            type: 'error',
+            title: 'Oops!',
+            description: 'Um erro inesperado ocorreu!',
+          });
+        } else {
+          handleLoadCheckList();
+
+          addToast({
+            type: 'success',
+            title: 'Status alterado!',
+            description: 'Manutenção atualizada!',
+          });
+        }
+      } catch (error) {
+        addToast({
+          type: 'error',
+          title: 'Oops!',
+          description: 'Um erro inesperado ocorreu!',
+        });
+      }
+    },
+    [location.state.id, handleLoadCheckList, addToast],
+  );
 
   useEffect(() => {
     handleLoadMaintenances();
@@ -238,6 +330,7 @@ const ListMaintenance: React.FC = () => {
                   <tr>
                     <th align="left">Descrição</th>
                     <th align="left">Status</th>
+                    <th align="left">Opções</th>
                   </tr>
                 </thead>
 
@@ -246,6 +339,34 @@ const ListMaintenance: React.FC = () => {
                     <tr key={checkListMaintenance.id}>
                       <td>{checkListMaintenance.checkListMaintenance.name}</td>
                       <td>{returnStatus(checkListMaintenance.status)}</td>
+                      <td>
+                        {status === 'P' && checkListMaintenance.status === 'P' && (
+                          <>
+                            <Button
+                              style={{ width: '40%', marginRight: '5px' }}
+                              id="btnConcluirCheckList"
+                              onClick={() =>
+                                handleUpdateRealizeCheckList(
+                                  checkListMaintenance.id,
+                                )
+                              }
+                            >
+                              Concluir
+                            </Button>
+                            <Button
+                              style={{ width: '40%', background: '#ff002f' }}
+                              id="btnCancelarCheckList"
+                              onClick={() =>
+                                handleUpdateCancelCheckList(
+                                  checkListMaintenance.id,
+                                )
+                              }
+                            >
+                              Cancelar
+                            </Button>
+                          </>
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

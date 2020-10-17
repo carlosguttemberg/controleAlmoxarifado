@@ -49,26 +49,26 @@ const Calibration: React.FC = () => {
     ListMaintenanceTypeFormData[]
   >([]);
 
-  async function loadEquipaments() {
+  const handleLoadEquipaments = useCallback(async () => {
     const response = await api.get('/equipaments');
     setEquipaments(response.data);
-  }
+  }, []);
 
-  async function loadEmployees() {
+  const handleLoadEmployees = useCallback(async () => {
     const response = await api.get('/employees');
     setEmployees(response.data);
-  }
+  }, []);
 
-  async function loadMaintenanceTypes() {
+  const handleLoadMaintenanceTypes = useCallback(async () => {
     const response = await api.get('/maintenanceTypes');
     setMaintenanceTypes(response.data);
-  }
+  }, []);
 
   useEffect(() => {
-    loadEquipaments();
-    loadEmployees();
-    loadMaintenanceTypes();
-  }, []);
+    handleLoadEquipaments();
+    handleLoadEmployees();
+    handleLoadMaintenanceTypes();
+  }, [handleLoadEquipaments, handleLoadEmployees, handleLoadMaintenanceTypes]);
 
   const handleSubmit = useCallback(
     async (data: MaintenanceFormData) => {
