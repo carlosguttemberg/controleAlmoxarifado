@@ -3,8 +3,10 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import CreateMaintenanceService from '@modules/maintenances/services/CreateMaintenanceService';
+import UpdateMaintenanceService from '@modules/maintenances/services/UpdateMaintenanceService';
 import ListMaintenanceService from '@modules/maintenances/services/ListMaintenanceService';
 import IListMaintenancesDTO from '@modules/maintenances/dtos/IListMaintenancesDTO';
+import IUpdateMaintenancesDTO from '@modules/maintenances/dtos/IUpdateMaintenancesDTO';
 
 interface IMyRequest extends Request {
   query: {
@@ -13,6 +15,13 @@ interface IMyRequest extends Request {
     equipament_id: string;
     status: string;
     date: any;
+    id: string;
+  };
+}
+
+interface IRequestUpdate extends Request {
+  query: {
+    status: string;
     id: string;
   };
 }
@@ -65,5 +74,25 @@ export default class MaintenancesController {
     });
 
     return response.json(maintenances);
+  }
+
+  public async update(
+    request: IRequestUpdate,
+    response: Response,
+  ): Promise<Response> {
+    try {
+      const { status, id }: IUpdateMaintenancesDTO = request.body;
+
+      const updateMaintenance = container.resolve(UpdateMaintenanceService);
+
+      const maintenance = await updateMaintenance.execute({
+        status,
+        id,
+      });
+
+      return response.json(maintenance);
+    } catch (error) {
+      return response.json(error);
+    }
   }
 }

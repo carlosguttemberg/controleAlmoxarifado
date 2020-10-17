@@ -6,7 +6,9 @@ import MaintenanceCheckList from '@modules/maintenancesCheckList/infra/typeorm/e
 import ICreateMaintenancesDTO from '@modules/maintenances/dtos/ICreateMaintenancesDTO';
 
 import IListMaintenancesDTO from '@modules/maintenances/dtos/IListMaintenancesDTO';
+import IUpdateMaintenancesDTO from '@modules/maintenances/dtos/IUpdateMaintenancesDTO';
 import IMaintenancesRepository from '@modules/maintenances/repositories/IMaintenancesRepository';
+import AppError from '@shared/errors/AppError';
 
 interface IFilters {
   maintenanceType_id?: string;
@@ -92,6 +94,28 @@ class MaintenancesRepository implements IMaintenancesRepository {
     });
 
     return maintenances;
+  }
+
+  public async update({
+    id,
+    status,
+  }: IUpdateMaintenancesDTO): Promise<Maintenance> {
+    try {
+      if (!status) throw new AppError('Informe um Status');
+      if (!id) throw new AppError('Informe uma manutenção');
+
+      const maintenance = await this.ormRepository.findOne(id);
+
+      if (!maintenance) throw new AppError('Manutenção não encontrada');
+
+      maintenance.status = status;
+
+      const updateMaintenance = await this.ormRepository.save(maintenance);
+
+      return updateMaintenance;
+    } catch (error) {
+      return error.message;
+    }
   }
 }
 
