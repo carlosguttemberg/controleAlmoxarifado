@@ -6,6 +6,8 @@ import ICreateMaintenanceCheckListDTO from '@modules/maintenancesCheckList/dtos/
 
 import IListMaintenanceCheckListDTO from '@modules/maintenancesCheckList/dtos/IListMaintenanceCheckListDTO';
 import IMaintenanceCheckListRepository from '@modules/maintenancesCheckList/repositories/IMaintenanceCheckListRepository';
+import IUpdateMaintenanceCheckListDTO from '@modules/maintenancesCheckList/dtos/IUpdateMaintenanceCheckListDTO';
+import AppError from '@shared/errors/AppError';
 
 interface IFilters {
   checkListMaintenance_id?: string;
@@ -56,6 +58,30 @@ class MaintenanceCheckListRepository
     });
 
     return checkList;
+  }
+
+  public async update({
+    id,
+    maintenance_id,
+    status,
+  }: IUpdateMaintenanceCheckListDTO): Promise<MaintenanceCheckList> {
+    try {
+      if (!status) throw new AppError('Informe um Status');
+      if (!maintenance_id) throw new AppError('Informe uma manutenção');
+      if (!id) throw new AppError('Informe uma opção');
+
+      const checkList = await this.ormRepository.findOne(id);
+
+      if (!checkList) throw new AppError('CheckList não encontrado');
+
+      checkList.status = status;
+
+      const updateCheckList = await this.ormRepository.save(checkList);
+
+      return updateCheckList;
+    } catch (error) {
+      return error.message;
+    }
   }
 }
 

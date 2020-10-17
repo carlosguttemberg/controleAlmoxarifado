@@ -5,6 +5,8 @@ import { container } from 'tsyringe';
 import CreateMaintenanceCheckListService from '@modules/maintenancesCheckList/services/CreateMaintenanceCheckListService';
 import ListMaintenanceCheckListService from '@modules/maintenancesCheckList/services/ListMaintenanceCheckListService';
 import IListMaintenanceCheckListDTO from '@modules/maintenancesCheckList/dtos/IListMaintenanceCheckListDTO';
+import IUpdateMaintenanceCheckListDTO from '@modules/maintenancesCheckList/dtos/IUpdateMaintenanceCheckListDTO';
+import UpdateMaintenanceCheckListService from '@modules/maintenancesCheckList/services/UpdateMaintenanceCheckListService';
 
 interface IMyRequest extends Request {
   query: {
@@ -45,6 +47,26 @@ export default class MaintenanceCheckListController {
     const checkList = await listCheckList.execute({
       checkListMaintenance_id,
       maintenance_id,
+      status,
+    });
+
+    return response.json(checkList);
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const {
+      id,
+      maintenance_id,
+      status,
+    }: IUpdateMaintenanceCheckListDTO = request.body;
+
+    const updateMaintenanceCheckList = container.resolve(
+      UpdateMaintenanceCheckListService,
+    );
+
+    const checkList = await updateMaintenanceCheckList.execute({
+      maintenance_id,
+      id,
       status,
     });
 

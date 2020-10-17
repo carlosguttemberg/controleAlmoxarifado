@@ -7,5 +7,6 @@ const maintenanceCheckListController = new MaintenanceCheckListController();
 
 checkListRouter.post('/', maintenanceCheckListController.create);
 checkListRouter.get('/', maintenanceCheckListController.list);
+checkListRouter.patch('/', maintenanceCheckListController.update);
 
 export default checkListRouter;
