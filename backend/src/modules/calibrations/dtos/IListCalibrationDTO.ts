@@ -5,4 +5,5 @@ export default interface IListCalibrationtDTO {
   status: string;
   date: Date;
   id: string;
+  final_date: Date;
 }

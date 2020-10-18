@@ -20,6 +20,7 @@ class ListCalibrationService {
     status,
     date,
     id,
+    final_date,
   }: IListCalibrationDTO): Promise<Calibration[]> {
     const calibration = await this.calibrationsRepository.list({
       calibrationType_id,
@@ -28,6 +29,7 @@ class ListCalibrationService {
       status,
       date,
       id,
+      final_date,
     });
 
     return calibration;

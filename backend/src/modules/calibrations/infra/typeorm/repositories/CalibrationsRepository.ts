@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Repository, Between } from 'typeorm';
 
 import Calibration from '@modules/calibrations/infra/typeorm/entities/Calibration';
 import CheckListCalibration from '@modules/checkListCalibration/infra/typeorm/entities/CheckListCalibration';
@@ -59,8 +59,14 @@ class CalibrationsRepository implements ICalibrationsRepository {
     status,
     date,
     id,
+    final_date,
   }: IListCalibrationDTO): Promise<Calibration[]> {
     const filters: IFilters[] = [];
+    if (date && final_date) {
+      filters.push({
+        date: Between(date, final_date),
+      });
+    }
 
     if (calibrationType_id) {
       filters.push({ calibrationType_id });
@@ -76,10 +82,6 @@ class CalibrationsRepository implements ICalibrationsRepository {
 
     if (status) {
       filters.push({ status });
-    }
-
-    if (date) {
-      filters.push({ date });
     }
 
     if (id) {

@@ -14,6 +14,7 @@ interface IMyRequest extends Request {
     equipament_id: string;
     status: string;
     date: any;
+    final_date: any;
     id: string;
   };
 }
@@ -52,6 +53,7 @@ export default class CalibrationsController {
       status,
       date,
       id,
+      final_date,
     }: IListCalibrationDTO = request.query;
 
     const listCalibration = container.resolve(ListCalibrationService);
@@ -63,6 +65,7 @@ export default class CalibrationsController {
       status,
       date,
       id,
+      final_date,
     });
 
     return response.json(calibrations);
