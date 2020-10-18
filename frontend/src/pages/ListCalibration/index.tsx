@@ -14,12 +14,19 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import Button from '../../components/Button';
 import Table from '../../components/Table';
 import Select from '../../components/Select';
+import Input from '../../components/Input';
 
 import formatValue from '../../utils/formatValue';
 import formatDate from '../../utils/formatDate';
 import returnStatus from '../../utils/returnStatus';
 
-import { Container, AnimationContainer, Header, Content } from './styles';
+import {
+  Container,
+  AnimationContainer,
+  Header,
+  Content,
+  ContainerGrid,
+} from './styles';
 
 interface ListCalibrationFormData {
   equipament_id: string;
@@ -32,6 +39,7 @@ interface ListCalibrationFormData {
   value: number;
   status: string;
   id: string;
+  final_date: string;
 }
 
 interface ListEquipamentFormData {
@@ -89,10 +97,19 @@ const ListCalibration: React.FC = () => {
       date,
       employee_id,
       equipament_id,
+      final_date,
+      status,
     }: ListCalibrationFormData) => {
       try {
         const response = await api.get('/calibrations', {
-          params: { calibrationType_id, date, employee_id, equipament_id },
+          params: {
+            calibrationType_id,
+            date,
+            employee_id,
+            equipament_id,
+            final_date,
+            status,
+          },
         });
 
         setCalibrations(response.data);
@@ -149,39 +166,86 @@ const ListCalibration: React.FC = () => {
           <hr />
 
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <Select name="equipament_id" icon={FiGrid}>
-              <option value="">Equipamentos</option>
+            <div>
+              <ContainerGrid>
+                <div>
+                  <label htmlFor="date">Data Inicial</label>
+                  <Input name="date" type="date" />
+                </div>
 
-              {equipaments.map(equipament => (
-                <option value={equipament.id}>{equipament.name}</option>
-              ))}
-            </Select>
+                <div>
+                  <label htmlFor="final_date">Data Final</label>
+                  <Input name="final_date" id="final_date" type="date" />
+                </div>
 
-            <Select name="employee_id" icon={FiGrid}>
-              <option value="">Funcionário</option>
+                <div>
+                  <label htmlFor="equipament_id">Equipamentos</label>
+                  <Select name="equipament_id" id="equipament_id" icon={FiGrid}>
+                    <option value="">Equipamentos</option>
 
-              {employees.map(employee => (
-                <option value={employee.id}>{employee.name}</option>
-              ))}
-            </Select>
+                    {equipaments.map(equipament => (
+                      <option key={equipament.id} value={equipament.id}>
+                        {equipament.name}
+                      </option>
+                    ))}
+                  </Select>
+                </div>
 
-            <Select name="calibrationType_id" icon={FiGrid}>
-              <option value="">Tipo de Calibração</option>
+                <div>
+                  <label htmlFor="employee_id">Funcionário</label>
+                  <Select name="employee_id" id="employee_id" icon={FiGrid}>
+                    <option value="">Funcionário</option>
 
-              {calibrationTypes.map(calibrationType => (
-                <option value={calibrationType.id}>
-                  {calibrationType.name}
-                </option>
-              ))}
-            </Select>
+                    {employees.map(employee => (
+                      <option key={employee.id} value={employee.id}>
+                        {employee.name}
+                      </option>
+                    ))}
+                  </Select>
+                </div>
 
-            <Button style={{ marginLeft: '20px' }} type="submit">
-              Pesquisar
-            </Button>
+                <div>
+                  <label htmlFor="calibrationType_id">Tipo</label>
+                  <Select
+                    name="calibrationType_id"
+                    id="calibrationType_id"
+                    icon={FiGrid}
+                  >
+                    <option value="">Tipo de Calibração</option>
+
+                    {calibrationTypes.map(calibrationType => (
+                      <option
+                        key={calibrationType.id}
+                        value={calibrationType.id}
+                      >
+                        {calibrationType.name}
+                      </option>
+                    ))}
+                  </Select>
+                </div>
+              </ContainerGrid>
+
+              <ContainerGrid>
+                <div>
+                  <label htmlFor="status">Status</label>
+                  <Select name="status" id="status" icon={FiGrid}>
+                    <option value="">Selecione</option>
+                    <option value="P">Pendente</option>
+                    <option value="R">Realizado</option>
+                    <option value="R">Cancelado</option>
+                  </Select>
+                </div>
+                <div style={{ display: 'block' }}>
+                  <label>&nbsp;</label>
+                  <Button style={{ marginLeft: '20px' }} type="submit">
+                    Pesquisar
+                  </Button>
+                </div>
+              </ContainerGrid>
+              <br />
+              <hr />
+            </div>
           </Form>
-
-          <hr />
-          <br />
 
           {calibrations.length > 0 && (
             <Table>

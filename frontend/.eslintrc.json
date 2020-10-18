@@ -29,6 +29,7 @@
       "prettier"
   ],
   "rules": {
+    "jsx-a11y/label-has-associated-control": "off",
     "camelcase": "off",
     "no-use-before-define": "off",
     "react-hooks/rules-of-hooks": "error",

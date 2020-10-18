@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useLocation, useHistory, Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
@@ -311,7 +311,8 @@ const EditCalibration: React.FC = () => {
                               onClick={() =>
                                 handleUpdateRealizeCheckList(
                                   checkListCalibration.id,
-                                )}
+                                )
+                              }
                             >
                               Concluir
                             </Button>
@@ -321,7 +322,8 @@ const EditCalibration: React.FC = () => {
                               onClick={() =>
                                 handleUpdateCancelCheckList(
                                   checkListCalibration.id,
-                                )}
+                                )
+                              }
                             >
                               Cancelar
                             </Button>
