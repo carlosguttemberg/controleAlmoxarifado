@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Repository, Between } from 'typeorm';
 
 import Maintenance from '@modules/maintenances/infra/typeorm/entities/Maintenance';
 import CheckListMaintenance from '@modules/checkListMaintenance/infra/typeorm/entities/CheckListMaintenance';
@@ -61,8 +61,13 @@ class MaintenancesRepository implements IMaintenancesRepository {
     status,
     date,
     id,
+    final_date,
   }: IListMaintenancesDTO): Promise<Maintenance[]> {
     const filters: IFilters[] = [];
+
+    if (date && final_date) {
+      filters.push({ date: Between(date, final_date) });
+    }
 
     if (id) {
       filters.push({ id });
@@ -82,10 +87,6 @@ class MaintenancesRepository implements IMaintenancesRepository {
 
     if (status) {
       filters.push({ status });
-    }
-
-    if (date) {
-      filters.push({ date });
     }
 
     const maintenances = await this.ormRepository.find({

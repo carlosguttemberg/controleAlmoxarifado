@@ -5,4 +5,5 @@ export default interface IListMaintenancesDTO {
   status: string;
   date: Date;
   id: string;
+  final_date: Date;
 }
