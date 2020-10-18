@@ -235,6 +235,7 @@ const ListCalibration: React.FC = () => {
                     <option value="R">Cancelado</option>
                   </Select>
                 </div>
+
                 <div style={{ display: 'block' }}>
                   <label>&nbsp;</label>
                   <Button style={{ marginLeft: '20px' }} type="submit">

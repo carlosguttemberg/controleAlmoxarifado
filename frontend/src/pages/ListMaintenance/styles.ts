@@ -9,6 +9,12 @@ export const Container = styled.div`
   margin: 50px auto;
 `;
 
+export const ContainerGrid = styled.div`
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px !important;
+`;
+
 export const Content = styled.div`
   height: 100%;
   width: 100%;
@@ -38,8 +44,8 @@ export const AnimationContainer = styled.div`
 
   form {
     margin: 20px 0;
-    width: 340px;
-    display: flex;
+    width: 100%;
+    display: block;
     text-align: center;
 
     a {
@@ -54,7 +60,6 @@ export const AnimationContainer = styled.div`
     }
 
     div {
-      height: 56px;
       margin: 0;
       & + div {
         margin-left: 8px;

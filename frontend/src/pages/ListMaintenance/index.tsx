@@ -14,18 +14,26 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import Button from '../../components/Button';
 import Table from '../../components/Table';
 import Select from '../../components/Select';
+import Input from '../../components/Input';
 
 import formatValue from '../../utils/formatValue';
 import formatDate from '../../utils/formatDate';
 import returnStatus from '../../utils/returnStatus';
 
-import { Container, AnimationContainer, Header, Content } from './styles';
+import {
+  Container,
+  AnimationContainer,
+  Header,
+  Content,
+  ContainerGrid,
+} from './styles';
 
 interface ListMaintenanceFormData {
   equipament_id: string;
   employee_id: string;
   maintenanceType_id: string;
   date: Date;
+  final_date: Date;
   equipament: ListEquipamentFormData;
   employee: ListEmployeeFormData;
   maintenanceTypes: ListMaintenanceypeFormData;
@@ -89,10 +97,19 @@ const ListMaintenance: React.FC = () => {
       date,
       employee_id,
       equipament_id,
+      status,
+      final_date,
     }: ListMaintenanceFormData) => {
       try {
         const response = await api.get('/maintenances', {
-          params: { maintenanceType_id, date, employee_id, equipament_id },
+          params: {
+            maintenanceType_id,
+            date,
+            employee_id,
+            equipament_id,
+            status,
+            final_date,
+          },
         });
 
         setMaintenances(response.data);
@@ -149,35 +166,73 @@ const ListMaintenance: React.FC = () => {
           <hr />
 
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <Select name="equipament_id" icon={FiGrid}>
-              <option value="">Equipamentos</option>
+            <div>
+              <ContainerGrid>
+                <div>
+                  <label htmlFor="date">Data Inicial</label>
+                  <Input name="date" type="date" />
+                </div>
 
-              {equipaments.map(equipament => (
-                <option value={equipament.id}>{equipament.name}</option>
-              ))}
-            </Select>
+                <div>
+                  <label htmlFor="final_date">Data Final</label>
+                  <Input name="final_date" id="final_date" type="date" />
+                </div>
 
-            <Select name="employee_id" icon={FiGrid}>
-              <option value="">Funcionário</option>
+                <div>
+                  <label htmlFor="equipament_id">Equipamento</label>
+                  <Select name="equipament_id" id="equipament_id" icon={FiGrid}>
+                    <option value="">Selecione</option>
 
-              {employees.map(employee => (
-                <option value={employee.id}>{employee.name}</option>
-              ))}
-            </Select>
+                    {equipaments.map(equipament => (
+                      <option value={equipament.id}>{equipament.name}</option>
+                    ))}
+                  </Select>
+                </div>
 
-            <Select name="maintenanceType_id" icon={FiGrid}>
-              <option value="">Tipo de Manutenção</option>
+                <div>
+                  <label htmlFor="employee_id">Funcionário</label>
+                  <Select name="employee_id" icon={FiGrid}>
+                    <option value="">Selecione</option>
 
-              {maintenanceTypes.map(maintenanceType => (
-                <option value={maintenanceType.id}>
-                  {maintenanceType.name}
-                </option>
-              ))}
-            </Select>
+                    {employees.map(employee => (
+                      <option value={employee.id}>{employee.name}</option>
+                    ))}
+                  </Select>
+                </div>
 
-            <Button style={{ marginLeft: '20px' }} type="submit">
-              Pesquisar
-            </Button>
+                <div>
+                  <label htmlFor="employee_id">Tipo</label>
+                  <Select name="maintenanceType_id" icon={FiGrid}>
+                    <option value="">Selecione</option>
+
+                    {maintenanceTypes.map(maintenanceType => (
+                      <option value={maintenanceType.id}>
+                        {maintenanceType.name}
+                      </option>
+                    ))}
+                  </Select>
+                </div>
+              </ContainerGrid>
+
+              <ContainerGrid>
+                <div>
+                  <label htmlFor="status">Status</label>
+                  <Select name="status" id="status" icon={FiGrid}>
+                    <option value="">Selecione</option>
+                    <option value="P">Pendente</option>
+                    <option value="R">Realizado</option>
+                    <option value="R">Cancelado</option>
+                  </Select>
+                </div>
+
+                <div style={{ display: 'block' }}>
+                  <label>&nbsp;</label>
+                  <Button style={{ marginLeft: '20px' }} type="submit">
+                    Pesquisar
+                  </Button>
+                </div>
+              </ContainerGrid>
+            </div>
           </Form>
 
           <hr />
