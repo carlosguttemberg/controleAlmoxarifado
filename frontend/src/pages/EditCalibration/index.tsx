@@ -110,7 +110,7 @@ const EditCalibration: React.FC = () => {
       addToast({
         type: 'success',
         title: 'Status alterado!',
-        description: 'Manutenção atualizada!',
+        description: 'Calibração atualizada!',
       });
     }
   }, [
@@ -133,7 +133,7 @@ const EditCalibration: React.FC = () => {
       addToast({
         type: 'success',
         title: 'Status alterado!',
-        description: 'Manutenção atualizada!',
+        description: 'Calibração atualizada!',
       });
     }
   }, [
@@ -164,7 +164,7 @@ const EditCalibration: React.FC = () => {
           addToast({
             type: 'success',
             title: 'Status alterado!',
-            description: 'Manutenção atualizada!',
+            description: 'Calibração atualizada!',
           });
         }
       } catch (error) {
@@ -199,7 +199,7 @@ const EditCalibration: React.FC = () => {
           addToast({
             type: 'success',
             title: 'Status alterado!',
-            description: 'Manutenção atualizada!',
+            description: 'Calibração atualizada!',
           });
         }
       } catch (error) {
@@ -227,7 +227,7 @@ const EditCalibration: React.FC = () => {
               <Link to="/listCalibration">
                 <FiArrowLeft size={30} />
               </Link>
-              <h1>Editar Manutenções</h1>
+              <h1>Editar Calibrações</h1>
               {status === 'P' && (
                 <ContainerButtons>
                   <Button

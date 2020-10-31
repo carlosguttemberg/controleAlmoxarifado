@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FiUser, FiGrid, FiPackage } from 'react-icons/fi';
+import { FiUser, FiGrid, FiPackage, FiPieChart } from 'react-icons/fi';
 import MenuButton from '../../components/MenuButton';
 
 import { Container, Content } from './styles';

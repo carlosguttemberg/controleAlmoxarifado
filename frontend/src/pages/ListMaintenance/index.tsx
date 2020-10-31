@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { FiArrowLeft, FiPlus, FiGrid } from 'react-icons/fi';
+import { FiArrowLeft, FiPlus, FiGrid, FiPieChart } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
@@ -155,12 +155,27 @@ const ListMaintenance: React.FC = () => {
               </Link>
               <h1>Pesquisa de Manutenções</h1>
             </Header>
-            <Link to="/maintenance">
-              <h3>
-                <FiPlus style={{ marginRight: '5px' }} />
-                Novo
-              </h3>
-            </Link>
+            <div
+              style={{
+                display: 'flex',
+                width: '200px',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Link to="/maintenance">
+                <h3>
+                  <FiPlus style={{ marginRight: '5px' }} />
+                  Novo
+                </h3>
+              </Link>
+
+              <Link to="/graphicMaintenance">
+                <h3>
+                  <FiPieChart style={{ marginRight: '5px' }} />
+                  Gráfico
+                </h3>
+              </Link>
+            </div>
           </Header>
 
           <hr />

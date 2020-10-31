@@ -5,6 +5,8 @@ import { container } from 'tsyringe';
 import CreateMaintenanceService from '@modules/maintenances/services/CreateMaintenanceService';
 import UpdateMaintenanceService from '@modules/maintenances/services/UpdateMaintenanceService';
 import ListMaintenanceService from '@modules/maintenances/services/ListMaintenanceService';
+import GraphicMaintenanceService from '@modules/maintenances/services/GraphicMaintenanceService';
+import GraphicTypesMaintenanceService from '@modules/maintenances/services/GraphicTypesMaintenanceService';
 import IListMaintenancesDTO from '@modules/maintenances/dtos/IListMaintenancesDTO';
 import IUpdateMaintenancesDTO from '@modules/maintenances/dtos/IUpdateMaintenancesDTO';
 
@@ -97,5 +99,67 @@ export default class MaintenancesController {
     } catch (error) {
       return response.json(error);
     }
+  }
+
+  public async generateGraphic(
+    request: IMyRequest,
+    response: Response,
+  ): Promise<Response> {
+    const {
+      maintenanceType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    }: IListMaintenancesDTO = request.query;
+
+    const graphicMaintenanceService = container.resolve(
+      GraphicMaintenanceService,
+    );
+
+    const maintenances = await graphicMaintenanceService.execute({
+      maintenanceType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    });
+
+    return response.json(maintenances);
+  }
+
+  public async generateGraphicTypes(
+    request: IMyRequest,
+    response: Response,
+  ): Promise<Response> {
+    const {
+      maintenanceType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    }: IListMaintenancesDTO = request.query;
+
+    const graphicTypesMaintenanceService = container.resolve(
+      GraphicTypesMaintenanceService,
+    );
+
+    const maintenances = await graphicTypesMaintenanceService.execute({
+      maintenanceType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    });
+
+    return response.json(maintenances);
   }
 }

@@ -118,6 +118,47 @@ class MaintenancesRepository implements IMaintenancesRepository {
       return error.message;
     }
   }
+
+  public async generateGraphic({
+    maintenanceType_id,
+    employee_id,
+    equipament_id,
+    status,
+    date,
+    id,
+    final_date,
+  }: IListMaintenancesDTO): Promise<Maintenance[]> {
+    const maintenances = await this.ormRepository
+      .createQueryBuilder('maintenances')
+      .innerJoin('maintenances.equipament', 'equipaments')
+      .innerJoin('equipaments.subgroup', 'subgroups')
+      .select('subgroups.name', 'name')
+      .addSelect('SUM(maintenances.value)', 'value')
+      .addSelect('COUNT(*)', 'qtde')
+      .groupBy('subgroups.name')
+      .getRawMany();
+    return maintenances;
+  }
+
+  public async generateGraphicTypes({
+    maintenanceType_id,
+    employee_id,
+    equipament_id,
+    status,
+    date,
+    id,
+    final_date,
+  }: IListMaintenancesDTO): Promise<Maintenance[]> {
+    const maintenances = await this.ormRepository
+      .createQueryBuilder('maintenances')
+      .innerJoin('maintenances.maintenanceTypes', 'maintenanceTypes')
+      .select('maintenanceTypes.name', 'name')
+      .addSelect('SUM(maintenances.value)', 'value')
+      .addSelect('COUNT(*)', 'qtde')
+      .groupBy('maintenanceTypes.name')
+      .getRawMany();
+    return maintenances;
+  }
 }
 
 export default MaintenancesRepository;

@@ -8,4 +8,6 @@ export default interface IMaintenancesRepository {
   create(data: ICreateMaintenancesDTO): Promise<Maintenance>;
   list(data: IListMaintenancesDTO): Promise<Maintenance[]>;
   update(data: IUpdateMaintenancesDTO): Promise<Maintenance>;
+  generateGraphic(data: IListMaintenancesDTO): Promise<Maintenance[]>;
+  generateGraphicTypes(data: IListMaintenancesDTO): Promise<Maintenance[]>;
 }
