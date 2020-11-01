@@ -26,6 +26,9 @@ const GraphicMaintenance: React.FC = () => {
   const [infoGraphicTypes, setInfoGraphicTypes] = useState<
     ListInfoGraphicData[]
   >([]);
+  const [infoGraphicDepartament, setInfoGraphicDepartament] = useState<
+    ListInfoGraphicData[]
+  >([]);
 
   const handleLoadInfoGraphic = useCallback(async () => {
     const response = await api.get('/maintenances/graphic');
@@ -37,10 +40,20 @@ const GraphicMaintenance: React.FC = () => {
     setInfoGraphicTypes(response.data);
   }, []);
 
+  const handleLoadInfoGraphicDepartament = useCallback(async () => {
+    const response = await api.get('/maintenances/graphicDepartament');
+    setInfoGraphicDepartament(response.data);
+  }, []);
+
   useEffect(() => {
     handleLoadInfoGraphic();
     handleLoadInfoGraphicTypes();
-  }, [handleLoadInfoGraphic, handleLoadInfoGraphicTypes]);
+    handleLoadInfoGraphicDepartament();
+  }, [
+    handleLoadInfoGraphic,
+    handleLoadInfoGraphicTypes,
+    handleLoadInfoGraphicDepartament,
+  ]);
 
   return (
     <Container>
@@ -51,7 +64,7 @@ const GraphicMaintenance: React.FC = () => {
               <Link to="/">
                 <FiArrowLeft size={30} />
               </Link>
-              <h1>Gráfico de Manutenções</h1>
+              <h1>Gráfico de manutenções</h1>
             </Header>
 
             <div
@@ -120,7 +133,7 @@ const GraphicMaintenance: React.FC = () => {
             </div>
           )}
 
-          <h1>Gráfico de Tipos de Manutenções</h1>
+          <h1>Gráfico de tipos de manutenções</h1>
           <hr />
 
           {infoGraphicTypes.length > 0 && (
@@ -157,6 +170,55 @@ const GraphicMaintenance: React.FC = () => {
                     dataKey="value"
                     isAnimationActive={false}
                     data={infoGraphicTypes}
+                    cx={200}
+                    cy={200}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    label
+                  />
+                  <Tooltip />
+                </PieChart>
+              </div>
+            </div>
+          )}
+
+          <h1>Gráfico de manutenções por departamento</h1>
+          <hr />
+
+          {infoGraphicDepartament.length > 0 && (
+            <div style={{ display: 'flex' }}>
+              {infoGraphicDepartament.map(info => (
+                <ContainerList>
+                  {`${info.name}(${info.qtde})`}
+                  <br />
+                  {formatValue(info.value)}
+                </ContainerList>
+              ))}
+            </div>
+          )}
+
+          {infoGraphicDepartament.length > 0 && (
+            <div
+              style={{
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                display: 'flex',
+                height: '400px',
+              }}
+            >
+              <div
+                style={{
+                  width: '50%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <PieChart width={400} height={400}>
+                  <Pie
+                    dataKey="value"
+                    isAnimationActive={false}
+                    data={infoGraphicDepartament}
                     cx={200}
                     cy={200}
                     outerRadius={80}

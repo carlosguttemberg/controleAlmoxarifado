@@ -159,6 +159,27 @@ class MaintenancesRepository implements IMaintenancesRepository {
       .getRawMany();
     return maintenances;
   }
+
+  public async generateGraphicDepartament({
+    maintenanceType_id,
+    employee_id,
+    equipament_id,
+    status,
+    date,
+    id,
+    final_date,
+  }: IListMaintenancesDTO): Promise<Maintenance[]> {
+    const maintenances = await this.ormRepository
+      .createQueryBuilder('maintenances')
+      .innerJoin('maintenances.equipament', 'equipaments')
+      .innerJoin('equipaments.departament', 'departaments')
+      .select('departaments.name', 'name')
+      .addSelect('SUM(maintenances.value)', 'value')
+      .addSelect('COUNT(*)', 'qtde')
+      .groupBy('departaments.name')
+      .getRawMany();
+    return maintenances;
+  }
 }
 
 export default MaintenancesRepository;

@@ -64,7 +64,7 @@ const GraphicMaintenance: React.FC = () => {
               <Link to="/">
                 <FiArrowLeft size={30} />
               </Link>
-              <h1>Gráfico de Calibrações</h1>
+              <h1>Gráfico de calibrações</h1>
             </Header>
 
             <div
@@ -129,7 +129,7 @@ const GraphicMaintenance: React.FC = () => {
               </div>
             </div>
           )}
-          <h1>Gráfico de Tipos de Calibrações</h1>
+          <h1>Gráfico de tipos de calibrações</h1>
           <hr />
           {infoGraphicTypes.length > 0 && (
             <div style={{ display: 'flex' }}>
@@ -175,7 +175,7 @@ const GraphicMaintenance: React.FC = () => {
               </div>
             </div>
           )}
-          <h1>Gráfico de Calibrações por Departamento</h1>
+          <h1>Gráfico de calibrações por departamento</h1>
           <hr />
           {infoGraphicDepartament.length > 0 && (
             <div style={{ display: 'flex' }}>

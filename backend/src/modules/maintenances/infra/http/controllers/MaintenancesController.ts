@@ -9,6 +9,7 @@ import GraphicMaintenanceService from '@modules/maintenances/services/GraphicMai
 import GraphicTypesMaintenanceService from '@modules/maintenances/services/GraphicTypesMaintenanceService';
 import IListMaintenancesDTO from '@modules/maintenances/dtos/IListMaintenancesDTO';
 import IUpdateMaintenancesDTO from '@modules/maintenances/dtos/IUpdateMaintenancesDTO';
+import GraphicMaintenanceDepartamentService from '@modules/maintenances/services/GraphicMaintenanceDepartamentService';
 
 interface IMyRequest extends Request {
   query: {
@@ -151,6 +152,37 @@ export default class MaintenancesController {
     );
 
     const maintenances = await graphicTypesMaintenanceService.execute({
+      maintenanceType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    });
+
+    return response.json(maintenances);
+  }
+
+  public async generateGraphicDepartament(
+    request: IMyRequest,
+    response: Response,
+  ): Promise<Response> {
+    const {
+      maintenanceType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    }: IListMaintenancesDTO = request.query;
+
+    const graphicMaintenanceService = container.resolve(
+      GraphicMaintenanceDepartamentService,
+    );
+
+    const maintenances = await graphicMaintenanceService.execute({
       maintenanceType_id,
       employee_id,
       equipament_id,

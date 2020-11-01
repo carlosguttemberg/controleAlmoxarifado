@@ -13,5 +13,9 @@ maintenanceRouter.get(
   '/graphicTypes',
   maintenancesController.generateGraphicTypes,
 );
+maintenanceRouter.get(
+  '/graphicDepartament',
+  maintenancesController.generateGraphicDepartament,
+);
 
 export default maintenanceRouter;
