@@ -6,6 +6,8 @@ import CreateCalibrationService from '@modules/calibrations/services/CreateCalib
 import ListCalibrationService from '@modules/calibrations/services/ListCalibrationService';
 import IListCalibrationDTO from '@modules/calibrations/dtos/IListCalibrationDTO';
 import UpdateCalibrationService from '@modules/calibrations/services/UpdateCalibrationService';
+import GraphicCalibrationService from '@modules/calibrations/services/GraphicCalibrationService';
+import GraphicTypesCalibrationService from '@modules/calibrations/services/GraphicTypesCalibrationService';
 
 interface IMyRequest extends Request {
   query: {
@@ -82,5 +84,67 @@ export default class CalibrationsController {
     });
 
     return response.json(calibration);
+  }
+
+  public async generateGraphic(
+    request: IMyRequest,
+    response: Response,
+  ): Promise<Response> {
+    const {
+      calibrationType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    }: IListCalibrationDTO = request.query;
+
+    const graphicMaintenanceService = container.resolve(
+      GraphicCalibrationService,
+    );
+
+    const maintenances = await graphicMaintenanceService.execute({
+      calibrationType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    });
+
+    return response.json(maintenances);
+  }
+
+  public async generateGraphicTypes(
+    request: IMyRequest,
+    response: Response,
+  ): Promise<Response> {
+    const {
+      calibrationType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    }: IListCalibrationDTO = request.query;
+
+    const graphicTypesMaintenanceService = container.resolve(
+      GraphicTypesCalibrationService,
+    );
+
+    const maintenances = await graphicTypesMaintenanceService.execute({
+      calibrationType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    });
+
+    return response.json(maintenances);
   }
 }

@@ -8,4 +8,6 @@ export default interface ICalibrationsRepository {
   create(data: ICreateCalibrationDTO): Promise<Calibration>;
   list(data: IListCalibrationDTO): Promise<Calibration[]>;
   update(data: IUpdateCalibrationDTO): Promise<Calibration>;
+  generateGraphic(data: IListCalibrationDTO): Promise<Calibration[]>;
+  generateGraphicTypes(data: IListCalibrationDTO): Promise<Calibration[]>;
 }

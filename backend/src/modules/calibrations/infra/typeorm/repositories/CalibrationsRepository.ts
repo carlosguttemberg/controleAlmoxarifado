@@ -117,6 +117,47 @@ class CalibrationsRepository implements ICalibrationsRepository {
       return error.message;
     }
   }
+
+  public async generateGraphic({
+    calibrationType_id,
+    employee_id,
+    equipament_id,
+    status,
+    date,
+    id,
+    final_date,
+  }: IListCalibrationDTO): Promise<Calibration[]> {
+    const calibrations = await this.ormRepository
+      .createQueryBuilder('calibrations')
+      .innerJoin('calibrations.equipament', 'equipaments')
+      .innerJoin('equipaments.subgroup', 'subgroups')
+      .select('subgroups.name', 'name')
+      .addSelect('SUM(calibrations.value)', 'value')
+      .addSelect('COUNT(*)', 'qtde')
+      .groupBy('subgroups.name')
+      .getRawMany();
+    return calibrations;
+  }
+
+  public async generateGraphicTypes({
+    calibrationType_id,
+    employee_id,
+    equipament_id,
+    status,
+    date,
+    id,
+    final_date,
+  }: IListCalibrationDTO): Promise<Calibration[]> {
+    const calibrations = await this.ormRepository
+      .createQueryBuilder('calibrations')
+      .innerJoin('calibrations.calibrationTypes', 'calibrationTypes')
+      .select('calibrationTypes.name', 'name')
+      .addSelect('SUM(calibrations.value)', 'value')
+      .addSelect('COUNT(*)', 'qtde')
+      .groupBy('calibrationTypes.name')
+      .getRawMany();
+    return calibrations;
+  }
 }
 
 export default CalibrationsRepository;
