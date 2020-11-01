@@ -8,6 +8,7 @@ import IListCalibrationDTO from '@modules/calibrations/dtos/IListCalibrationDTO'
 import UpdateCalibrationService from '@modules/calibrations/services/UpdateCalibrationService';
 import GraphicCalibrationService from '@modules/calibrations/services/GraphicCalibrationService';
 import GraphicTypesCalibrationService from '@modules/calibrations/services/GraphicTypesCalibrationService';
+import GraphicCalibrationDepartamentService from '@modules/calibrations/services/GraphicCalibrationDepartamentService';
 
 interface IMyRequest extends Request {
   query: {
@@ -100,11 +101,11 @@ export default class CalibrationsController {
       final_date,
     }: IListCalibrationDTO = request.query;
 
-    const graphicMaintenanceService = container.resolve(
+    const graphicCalibrationeService = container.resolve(
       GraphicCalibrationService,
     );
 
-    const maintenances = await graphicMaintenanceService.execute({
+    const calibrations = await graphicCalibrationeService.execute({
       calibrationType_id,
       employee_id,
       equipament_id,
@@ -114,7 +115,7 @@ export default class CalibrationsController {
       final_date,
     });
 
-    return response.json(maintenances);
+    return response.json(calibrations);
   }
 
   public async generateGraphicTypes(
@@ -131,11 +132,11 @@ export default class CalibrationsController {
       final_date,
     }: IListCalibrationDTO = request.query;
 
-    const graphicTypesMaintenanceService = container.resolve(
+    const graphicCalibrationeService = container.resolve(
       GraphicTypesCalibrationService,
     );
 
-    const maintenances = await graphicTypesMaintenanceService.execute({
+    const calibrations = await graphicCalibrationeService.execute({
       calibrationType_id,
       employee_id,
       equipament_id,
@@ -145,6 +146,37 @@ export default class CalibrationsController {
       final_date,
     });
 
-    return response.json(maintenances);
+    return response.json(calibrations);
+  }
+
+  public async generateGraphicDepartament(
+    request: IMyRequest,
+    response: Response,
+  ): Promise<Response> {
+    const {
+      calibrationType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    }: IListCalibrationDTO = request.query;
+
+    const graphicCalibrationeService = container.resolve(
+      GraphicCalibrationDepartamentService,
+    );
+
+    const calibrations = await graphicCalibrationeService.execute({
+      calibrationType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    });
+
+    return response.json(calibrations);
   }
 }

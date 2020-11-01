@@ -10,4 +10,5 @@ export default interface ICalibrationsRepository {
   update(data: IUpdateCalibrationDTO): Promise<Calibration>;
   generateGraphic(data: IListCalibrationDTO): Promise<Calibration[]>;
   generateGraphicTypes(data: IListCalibrationDTO): Promise<Calibration[]>;
+  generateGraphicDepartament(data: IListCalibrationDTO): Promise<Calibration[]>;
 }

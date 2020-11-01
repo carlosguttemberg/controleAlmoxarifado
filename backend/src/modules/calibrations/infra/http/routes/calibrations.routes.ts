@@ -13,5 +13,9 @@ calibrationRouter.get(
   '/graphicTypes',
   calibrationsController.generateGraphicTypes,
 );
+calibrationRouter.get(
+  '/graphicDepartament',
+  calibrationsController.generateGraphicDepartament,
+);
 
 export default calibrationRouter;

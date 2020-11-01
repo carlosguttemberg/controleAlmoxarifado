@@ -158,6 +158,27 @@ class CalibrationsRepository implements ICalibrationsRepository {
       .getRawMany();
     return calibrations;
   }
+
+  public async generateGraphicDepartament({
+    calibrationType_id,
+    employee_id,
+    equipament_id,
+    status,
+    date,
+    id,
+    final_date,
+  }: IListCalibrationDTO): Promise<Calibration[]> {
+    const calibrations = await this.ormRepository
+      .createQueryBuilder('calibrations')
+      .innerJoin('calibrations.equipament', 'equipaments')
+      .innerJoin('equipaments.departament', 'departaments')
+      .select('departaments.name', 'name')
+      .addSelect('SUM(calibrations.value)', 'value')
+      .addSelect('COUNT(*)', 'qtde')
+      .groupBy('departaments.name')
+      .getRawMany();
+    return calibrations;
+  }
 }
 
 export default CalibrationsRepository;
