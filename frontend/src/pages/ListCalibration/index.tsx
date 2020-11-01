@@ -45,6 +45,9 @@ interface ListCalibrationFormData {
 interface ListEquipamentFormData {
   id: string;
   name: string;
+  departament: {
+    name: string;
+  };
 }
 
 interface ListEmployeeFormData {
@@ -200,12 +203,14 @@ const ListCalibration: React.FC = () => {
 
                     {equipaments.map(equipament => (
                       <option key={equipament.id} value={equipament.id}>
-                        {equipament.name}
+                        {`${equipament.name} - ${equipament.departament.name}`}
                       </option>
                     ))}
                   </Select>
                 </div>
+              </ContainerGrid>
 
+              <ContainerGrid>
                 <div>
                   <label htmlFor="employee_id">Funcionário</label>
                   <Select name="employee_id" id="employee_id" icon={FiGrid}>
@@ -238,9 +243,7 @@ const ListCalibration: React.FC = () => {
                     ))}
                   </Select>
                 </div>
-              </ContainerGrid>
 
-              <ContainerGrid>
                 <div>
                   <label htmlFor="status">Status</label>
                   <Select name="status" id="status" icon={FiGrid}>

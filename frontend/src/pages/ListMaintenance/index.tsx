@@ -45,6 +45,9 @@ interface ListMaintenanceFormData {
 interface ListEquipamentFormData {
   id: string;
   name: string;
+  departament: {
+    name: string;
+  };
 }
 
 interface ListEmployeeFormData {
@@ -199,11 +202,15 @@ const ListMaintenance: React.FC = () => {
                     <option value="">Selecione</option>
 
                     {equipaments.map(equipament => (
-                      <option value={equipament.id}>{equipament.name}</option>
+                      <option value={equipament.id}>
+                        {`${equipament.name} - ${equipament.departament.name}`}
+                      </option>
                     ))}
                   </Select>
                 </div>
+              </ContainerGrid>
 
+              <ContainerGrid>
                 <div>
                   <label htmlFor="employee_id">Funcionário</label>
                   <Select name="employee_id" icon={FiGrid}>
@@ -227,9 +234,6 @@ const ListMaintenance: React.FC = () => {
                     ))}
                   </Select>
                 </div>
-              </ContainerGrid>
-
-              <ContainerGrid>
                 <div>
                   <label htmlFor="status">Status</label>
                   <Select name="status" id="status" icon={FiGrid}>
