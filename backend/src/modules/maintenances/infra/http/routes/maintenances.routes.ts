@@ -17,5 +17,13 @@ maintenanceRouter.get(
   '/graphicDepartament',
   maintenancesController.generateGraphicDepartament,
 );
+maintenanceRouter.get(
+  '/graphicStatus',
+  maintenancesController.generateGraphicStatus,
+);
+maintenanceRouter.get(
+  '/graphicTotals',
+  maintenancesController.generateGraphicTotals,
+);
 
 export default maintenanceRouter;

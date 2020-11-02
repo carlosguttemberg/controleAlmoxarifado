@@ -180,6 +180,40 @@ class MaintenancesRepository implements IMaintenancesRepository {
       .getRawMany();
     return maintenances;
   }
+
+  public async generateGraphicStatus({
+    maintenanceType_id,
+    employee_id,
+    equipament_id,
+    status,
+    date,
+    id,
+    final_date,
+  }: IListMaintenancesDTO): Promise<Maintenance[]> {
+    const maintenances = await this.ormRepository
+      .createQueryBuilder('maintenances')
+      .select('COUNT(*)', 'qtde_realizadas')
+      .where("maintenances.status = 'R'")
+      .getRawOne();
+    return maintenances;
+  }
+
+  public async generateGraphicTotals({
+    maintenanceType_id,
+    employee_id,
+    equipament_id,
+    status,
+    date,
+    id,
+    final_date,
+  }: IListMaintenancesDTO): Promise<Maintenance[]> {
+    const maintenances = await this.ormRepository
+      .createQueryBuilder('maintenances')
+      .select('COUNT(*)', 'qtde_total')
+      .addSelect('SUM(maintenances.value)', 'valor_total')
+      .getRawOne();
+    return maintenances;
+  }
 }
 
 export default MaintenancesRepository;

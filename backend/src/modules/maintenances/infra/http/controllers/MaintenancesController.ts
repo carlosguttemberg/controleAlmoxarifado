@@ -10,6 +10,8 @@ import GraphicTypesMaintenanceService from '@modules/maintenances/services/Graph
 import IListMaintenancesDTO from '@modules/maintenances/dtos/IListMaintenancesDTO';
 import IUpdateMaintenancesDTO from '@modules/maintenances/dtos/IUpdateMaintenancesDTO';
 import GraphicMaintenanceDepartamentService from '@modules/maintenances/services/GraphicMaintenanceDepartamentService';
+import GraphicMaintenanceStatusService from '@modules/maintenances/services/GraphicMaintenanceStatusService';
+import GraphicMaintenanceTotalsService from '@modules/maintenances/services/GraphicMaintenanceTotalsService';
 
 interface IMyRequest extends Request {
   query: {
@@ -180,6 +182,68 @@ export default class MaintenancesController {
 
     const graphicMaintenanceService = container.resolve(
       GraphicMaintenanceDepartamentService,
+    );
+
+    const maintenances = await graphicMaintenanceService.execute({
+      maintenanceType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    });
+
+    return response.json(maintenances);
+  }
+
+  public async generateGraphicStatus(
+    request: IMyRequest,
+    response: Response,
+  ): Promise<Response> {
+    const {
+      maintenanceType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    }: IListMaintenancesDTO = request.query;
+
+    const graphicMaintenanceService = container.resolve(
+      GraphicMaintenanceStatusService,
+    );
+
+    const maintenances = await graphicMaintenanceService.execute({
+      maintenanceType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    });
+
+    return response.json(maintenances);
+  }
+
+  public async generateGraphicTotals(
+    request: IMyRequest,
+    response: Response,
+  ): Promise<Response> {
+    const {
+      maintenanceType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    }: IListMaintenancesDTO = request.query;
+
+    const graphicMaintenanceService = container.resolve(
+      GraphicMaintenanceTotalsService,
     );
 
     const maintenances = await graphicMaintenanceService.execute({

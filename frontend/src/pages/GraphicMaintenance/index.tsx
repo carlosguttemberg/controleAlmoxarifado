@@ -21,20 +21,37 @@ interface ListInfoGraphicData {
   value: number;
 }
 
+interface ListInfoGraphicStatusData {
+  qtde_realizadas: number;
+}
+
+interface ListInfoGraphicTotalsData {
+  qtde_total: number;
+  valor_total: number;
+}
+
 const GraphicMaintenance: React.FC = () => {
   const [infoGraphic, setInfoGraphic] = useState<ListInfoGraphicData[]>([]);
+
+  const [infoGraphicTotals, setInfoGraphicTotals] = useState<
+    ListInfoGraphicTotalsData
+  >();
+
+  const [infoGraphicStatus, setInfoGraphicStatus] = useState<
+    ListInfoGraphicStatusData
+  >();
+
   const [infoGraphicTypes, setInfoGraphicTypes] = useState<
     ListInfoGraphicData[]
   >([]);
+
   const [infoGraphicDepartament, setInfoGraphicDepartament] = useState<
     ListInfoGraphicData[]
   >([]);
-  const [valorTotal, setValorTotal] = useState(0);
-  const [qtdeTotal, setQtdeTotal] = useState(0);
 
-  const handleLoadInfoGraphic = useCallback(async () => {
-    const response = await api.get('/maintenances/graphic');
-    setInfoGraphic(response.data);
+  const handleLoadInfoGraphicStatus = useCallback(async () => {
+    const response = await api.get('/maintenances/graphicStatus');
+    setInfoGraphicStatus(response.data);
   }, []);
 
   const handleLoadInfoGraphicTypes = useCallback(async () => {
@@ -47,41 +64,23 @@ const GraphicMaintenance: React.FC = () => {
     setInfoGraphicDepartament(response.data);
   }, []);
 
-  const handleSumValue = useCallback(() => {
-    let valor = 0;
+  const handleLoadInfoGraphic = useCallback(async () => {
+    const response = await api.get('/maintenances/graphic');
+    setInfoGraphic(response.data);
+  }, []);
 
-    infoGraphic.forEach(info => {
-      valor += info.value;
-    });
-    setValorTotal(valor);
-  }, [infoGraphic]);
-
-  function sum(value: number, value2: number) {
-    return +value + +value2;
-  }
-
-  const handleSumQtde = useCallback(() => {
-    let qtde = 0;
-
-    infoGraphic.forEach(info => {
-      qtde = sum(info.qtde, qtde);
-    });
-    setQtdeTotal(qtde);
-  }, [infoGraphic]);
+  const handleLoadInfoGraphicTotals = useCallback(async () => {
+    const response = await api.get('/maintenances/graphicTotals');
+    setInfoGraphicTotals(response.data);
+  }, []);
 
   useEffect(() => {
     handleLoadInfoGraphic();
     handleLoadInfoGraphicTypes();
     handleLoadInfoGraphicDepartament();
-    handleSumValue();
-    handleSumQtde();
-  }, [
-    handleLoadInfoGraphic,
-    handleLoadInfoGraphicTypes,
-    handleLoadInfoGraphicDepartament,
-    handleSumValue,
-    handleSumQtde,
-  ]);
+    handleLoadInfoGraphicStatus();
+    handleLoadInfoGraphicTotals();
+  }, []);
 
   return (
     <Container>
@@ -112,23 +111,35 @@ const GraphicMaintenance: React.FC = () => {
           </Header>
 
           <hr />
+          {infoGraphicTotals && infoGraphicStatus && (
+            <div>
+              <h2>
+                Valor total:&nbsp;
+                {formatValue(infoGraphicTotals.valor_total)}
+              </h2>
 
-          <h2>
-            Valor total:&nbsp;
-            {formatValue(valorTotal)}
-          </h2>
+              <h2>
+                Qtde total:&nbsp;
+                {infoGraphicTotals.qtde_total}
+              </h2>
 
-          <h2>
-            Qtde total:&nbsp;
-            {qtdeTotal}
-          </h2>
-
+              <h2>
+                Percentual Realizações:&nbsp;
+                {(
+                  (infoGraphicStatus.qtde_realizadas /
+                    infoGraphicTotals.qtde_total) *
+                  100
+                ).toFixed(2)}
+                %
+              </h2>
+            </div>
+          )}
           <br />
 
           {infoGraphic.length > 0 && (
             <div style={{ display: 'flex' }}>
               {infoGraphic.map(info => (
-                <ContainerList>
+                <ContainerList key={info.name}>
                   {`${info.name}(${info.qtde})`}
                   <br />
                   {formatValue(info.value)}
@@ -177,7 +188,7 @@ const GraphicMaintenance: React.FC = () => {
           {infoGraphicTypes.length > 0 && (
             <div style={{ display: 'flex' }}>
               {infoGraphicTypes.map(info => (
-                <ContainerList>
+                <ContainerList key={info.name}>
                   {`${info.name}(${info.qtde})`}
                   <br />
                   {formatValue(info.value)}
@@ -226,7 +237,7 @@ const GraphicMaintenance: React.FC = () => {
           {infoGraphicDepartament.length > 0 && (
             <div style={{ display: 'flex' }}>
               {infoGraphicDepartament.map(info => (
-                <ContainerList>
+                <ContainerList key={info.name}>
                   {`${info.name}(${info.qtde})`}
                   <br />
                   {formatValue(info.value)}

@@ -13,4 +13,6 @@ export default interface IMaintenancesRepository {
   generateGraphicDepartament(
     data: IListMaintenancesDTO,
   ): Promise<Maintenance[]>;
+  generateGraphicStatus(data: IListMaintenancesDTO): Promise<Maintenance[]>;
+  generateGraphicTotals(data: IListMaintenancesDTO): Promise<Maintenance[]>;
 }
