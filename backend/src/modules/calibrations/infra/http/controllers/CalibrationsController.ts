@@ -9,6 +9,8 @@ import UpdateCalibrationService from '@modules/calibrations/services/UpdateCalib
 import GraphicCalibrationService from '@modules/calibrations/services/GraphicCalibrationService';
 import GraphicTypesCalibrationService from '@modules/calibrations/services/GraphicTypesCalibrationService';
 import GraphicCalibrationDepartamentService from '@modules/calibrations/services/GraphicCalibrationDepartamentService';
+import GraphicCalibrationTotalsService from '@modules/calibrations/services/GraphicCalibrationTotalsService';
+import GraphicCalibrationStatusService from '@modules/calibrations/services/GraphicCalibrationStatusService';
 
 interface IMyRequest extends Request {
   query: {
@@ -165,6 +167,68 @@ export default class CalibrationsController {
 
     const graphicCalibrationeService = container.resolve(
       GraphicCalibrationDepartamentService,
+    );
+
+    const calibrations = await graphicCalibrationeService.execute({
+      calibrationType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    });
+
+    return response.json(calibrations);
+  }
+
+  public async generateGraphicStatus(
+    request: IMyRequest,
+    response: Response,
+  ): Promise<Response> {
+    const {
+      calibrationType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    }: IListCalibrationDTO = request.query;
+
+    const graphicCalibrationeService = container.resolve(
+      GraphicCalibrationStatusService,
+    );
+
+    const calibrations = await graphicCalibrationeService.execute({
+      calibrationType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    });
+
+    return response.json(calibrations);
+  }
+
+  public async generateGraphicTotals(
+    request: IMyRequest,
+    response: Response,
+  ): Promise<Response> {
+    const {
+      calibrationType_id,
+      employee_id,
+      equipament_id,
+      status,
+      date,
+      id,
+      final_date,
+    }: IListCalibrationDTO = request.query;
+
+    const graphicCalibrationeService = container.resolve(
+      GraphicCalibrationTotalsService,
     );
 
     const calibrations = await graphicCalibrationeService.execute({

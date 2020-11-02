@@ -179,6 +179,40 @@ class CalibrationsRepository implements ICalibrationsRepository {
       .getRawMany();
     return calibrations;
   }
+
+  public async generateGraphicStatus({
+    calibrationType_id,
+    employee_id,
+    equipament_id,
+    status,
+    date,
+    id,
+    final_date,
+  }: IListCalibrationDTO): Promise<Calibration[]> {
+    const calibrations = await this.ormRepository
+      .createQueryBuilder('calibrations')
+      .select('COUNT(*)', 'qtde_realizadas')
+      .where("calibrations.status = 'R'")
+      .getRawOne();
+    return calibrations;
+  }
+
+  public async generateGraphicTotals({
+    calibrationType_id,
+    employee_id,
+    equipament_id,
+    status,
+    date,
+    id,
+    final_date,
+  }: IListCalibrationDTO): Promise<Calibration[]> {
+    const calibrations = await this.ormRepository
+      .createQueryBuilder('calibrations')
+      .select('COUNT(*)', 'qtde_total')
+      .addSelect('SUM(calibrations.value)', 'valor_total')
+      .getRawOne();
+    return calibrations;
+  }
 }
 
 export default CalibrationsRepository;

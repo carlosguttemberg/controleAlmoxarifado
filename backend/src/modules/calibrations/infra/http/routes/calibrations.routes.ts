@@ -18,4 +18,14 @@ calibrationRouter.get(
   calibrationsController.generateGraphicDepartament,
 );
 
+calibrationRouter.get(
+  '/graphicStatus',
+  calibrationsController.generateGraphicStatus,
+);
+
+calibrationRouter.get(
+  '/graphicTotals',
+  calibrationsController.generateGraphicTotals,
+);
+
 export default calibrationRouter;
