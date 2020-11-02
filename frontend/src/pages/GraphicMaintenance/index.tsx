@@ -29,6 +29,8 @@ const GraphicMaintenance: React.FC = () => {
   const [infoGraphicDepartament, setInfoGraphicDepartament] = useState<
     ListInfoGraphicData[]
   >([]);
+  const [valorTotal, setValorTotal] = useState(0);
+  const [qtdeTotal, setQtdeTotal] = useState(0);
 
   const handleLoadInfoGraphic = useCallback(async () => {
     const response = await api.get('/maintenances/graphic');
@@ -45,14 +47,40 @@ const GraphicMaintenance: React.FC = () => {
     setInfoGraphicDepartament(response.data);
   }, []);
 
+  const handleSumValue = useCallback(() => {
+    let valor = 0;
+
+    infoGraphic.forEach(info => {
+      valor += info.value;
+    });
+    setValorTotal(valor);
+  }, [infoGraphic]);
+
+  function sum(value: number, value2: number) {
+    return +value + +value2;
+  }
+
+  const handleSumQtde = useCallback(() => {
+    let qtde = 0;
+
+    infoGraphic.forEach(info => {
+      qtde = sum(info.qtde, qtde);
+    });
+    setQtdeTotal(qtde);
+  }, [infoGraphic]);
+
   useEffect(() => {
     handleLoadInfoGraphic();
     handleLoadInfoGraphicTypes();
     handleLoadInfoGraphicDepartament();
+    handleSumValue();
+    handleSumQtde();
   }, [
     handleLoadInfoGraphic,
     handleLoadInfoGraphicTypes,
     handleLoadInfoGraphicDepartament,
+    handleSumValue,
+    handleSumQtde,
   ]);
 
   return (
@@ -84,6 +112,16 @@ const GraphicMaintenance: React.FC = () => {
           </Header>
 
           <hr />
+
+          <h2>
+            Valor total:&nbsp;
+            {formatValue(valorTotal)}
+          </h2>
+
+          <h2>
+            Qtde total:&nbsp;
+            {qtdeTotal}
+          </h2>
 
           <br />
 
